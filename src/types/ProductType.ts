@@ -6,5 +6,5 @@ export interface ProductType {
     quantity: number;
     price: number;
     discount: number;
-    specialPrice: number;
+    specialPrice?: number;
 }
