@@ -1,6 +1,7 @@
+import type { Dispatch } from "@reduxjs/toolkit";
 import api from "../../api/api";
 
-export const fetchProducts = () => async (dispatch) => {
+export const fetchProducts = () => async (dispatch: Dispatch) => {
     try {
         const { data } = await api.get(`/public/products`);
         console.log(data.pageNumber);

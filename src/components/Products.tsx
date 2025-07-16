@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { fetchProducts } from "../store/actions";
 import type { AppDispatch, RootState } from "../store/reducers/store";
+import type { ProductType } from "../types/ProductType";
 
 const Products = () => {
     const errorMessage: string = "";
@@ -25,7 +26,7 @@ const Products = () => {
             ) : (
                 <div className="min-h-[700px]">
                     <div className="pb-6 pt-14 grid 2xl:grid-cols-4 lg:grid-cols-3 sm:grid-cols-2 gap-y-6 gap-x-6">
-                        {products && products.map((item, i) => (
+                        {products && products.map((item: ProductType, i: number) => (
                             <ProductCard key={i} {...item} />
                         ))}
                     </div>
