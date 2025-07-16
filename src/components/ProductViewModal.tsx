@@ -1,6 +1,9 @@
 import { Button, Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/react'
 import type { ProductType } from '../types/ProductType';
 import type React from 'react';
+import { Divider } from '@mui/material';
+import Status from './Status';
+import { MdClose, MdDone } from 'react-icons/md';
 
 type ModalProps = {
     open: boolean;
@@ -49,13 +52,22 @@ function ProductViewModal({ open, setOpen, product, isAvailable }: ModalProps) {
                                         )}
 
                                         {isAvailable ? (
-                                            <p>In stock</p>
+                                            <Status text="In Stock" icon={MdDone} color="text-teal-900" />
                                         ) : (
-                                            <p>Out of stock</p>
+                                            <Status text="Out of Stock" icon={MdClose} color="text-rose-900" />
                                         )
                                         }
                                     </div>
+                                    <Divider />
+                                    <p>{description}</p>
                                 </div>
+                            </div>
+                            <div className='px-6 py-4 flex justify-end gap-4'>
+                                <button onClick={() => setOpen(false)}
+                                    type="button"
+                                    className='px-4 py-2 text-sm cursor-pointer font-semibold text-slate-700'
+                                > Close
+                                </button>
                             </div>
                         </DialogPanel>
                     </div>
