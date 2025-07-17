@@ -1,8 +1,10 @@
 import type { Dispatch } from "@reduxjs/toolkit";
 import api from "../../api/api";
+import axios from "axios";
 
 export const fetchProducts = () => async (dispatch: Dispatch) => {
     try {
+        dispatch({ type: "IS_FETCHING" })
         const { data } = await api.get(`/public/products`);
         console.log(data.pageNumber);
         dispatch({
@@ -14,7 +16,25 @@ export const fetchProducts = () => async (dispatch: Dispatch) => {
             totalPages: data.totalPages,
             lastPage: data.lastPage
         });
-    } catch (error) {
+        dispatch({ type: "IS_SUCCESS" })
+    } catch (error: unknown) {
         console.log(error);
+        
+        let errorMessage = "Failed to fetch products";
+
+        if (axios.isAxiosError(error)) {
+            if (error.response?.data?.message) {
+                errorMessage = error.response.data.message;
+            } else if (error.message) {
+                errorMessage = error.message;
+            }
+        } else if (error instanceof Error) {
+            errorMessage = error.message;
+        }
+
+        dispatch({
+            type: "IS_ERROR",
+            payload: errorMessage,
+        });
     }
 };

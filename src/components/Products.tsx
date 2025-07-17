@@ -7,8 +7,7 @@ import type { AppDispatch, RootState } from "../store/reducers/store";
 import type { ProductType } from "../types/ProductType";
 
 const Products = () => {
-    const errorMessage: string = "";
-    const isLoading: boolean = false;
+    const { isLoading, errorMessage } = useSelector((state: RootState) => state.errors)
     const { products } = useSelector((state: RootState) => state.products)
     const dispatch: AppDispatch = useDispatch();
     useEffect(() => {
