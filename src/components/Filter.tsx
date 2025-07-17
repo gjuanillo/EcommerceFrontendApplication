@@ -8,17 +8,11 @@ type Category = {
     categoryName: string
 }
 
-const Filter = () => {
-    const categories: Category[] = [
-        { categoryId: 1, categoryName: "Central Processing Unit (CPU)" },
-        { categoryId: 2, categoryName: "Graphics Processing Unit (GPU)" },
-        { categoryId: 3, categoryName: "Motherboard" },
-        { categoryId: 4, categoryName: "Memory" },
-        { categoryId: 5, categoryName: "Solid State/Hard Disk Drives (SSD/HDD)" },
-        { categoryId: 6, categoryName: "CPU Cooler/Fans" },
-        { categoryId: 7, categoryName: "Power Supply Unit (PSU)" },
-        { categoryId: 8, categoryName: "PC Case" },
-    ];
+type FilterProps = {
+    categories: Category[]
+}
+
+const Filter = ({ categories }: FilterProps) => {
     const [searchParams] = useSearchParams();
     const params = new URLSearchParams(searchParams);
     const pathName = useLocation().pathname;

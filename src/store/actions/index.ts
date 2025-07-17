@@ -38,3 +38,40 @@ export const fetchProducts = (queryString: string) => async (dispatch: Dispatch)
         });
     }
 };
+
+export const fetchCategories = () => async (dispatch: Dispatch) => {
+    try {
+        dispatch({ type: "CATEGORY_LOADER" })
+        const { data } = await api.get(`/public/categories`);
+        console.log(data.pageNumber);
+        dispatch({
+            type: "FETCH_CATEGORIES",
+            payload: data.content,
+            pageNumber: data.pageNumber,
+            pageSize: data.pageSize,
+            totalElements: data.totalElements,
+            totalPages: data.totalPages,
+            lastPage: data.lastPage
+        });
+        dispatch({ type: "CATEGORY_SUCCESS" })
+    } catch (error: unknown) {
+        console.log(error);
+
+        let errorMessage = "Failed to fetch categories";
+
+        if (axios.isAxiosError(error)) {
+            if (error.response?.data?.message) {
+                errorMessage = error.response.data.message;
+            } else if (error.message) {
+                errorMessage = error.message;
+            }
+        } else if (error instanceof Error) {
+            errorMessage = error.message;
+        }
+
+        dispatch({
+            type: "IS_ERROR",
+            payload: errorMessage,
+        });
+    }
+};

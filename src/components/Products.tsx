@@ -1,18 +1,24 @@
 import { FaExclamationTriangle } from "react-icons/fa";
 import ProductCard from "./ProductCard";
 import { useSelector } from "react-redux";
-import type { RootState } from "../store/reducers/store";
+import { useAppDispatch, type RootState } from "../store/reducers/store";
 import type { ProductType } from "../types/ProductType";
 import Filter from "./Filter";
 import useProductFilter from "./useProductFilter";
+import { useEffect } from "react";
+import { fetchCategories } from "../store/actions";
 
 const Products = () => {
     const { isLoading, errorMessage } = useSelector((state: RootState) => state.errors)
-    const { products } = useSelector((state: RootState) => state.products)
+    const { products, categories } = useSelector((state: RootState) => state.products)
+    const dispatch = useAppDispatch();
     useProductFilter();
+    useEffect(() => {
+        dispatch(fetchCategories());
+    }, [dispatch])
     return (
         <div className="lg:px-14 sm:px-8 px-4 py-14 2xl:w-[90%] 2xl:mx-auto">
-            <Filter />
+            <Filter categories={categories ? categories : []} />
             {isLoading ? (
                 <p>Loading...</p>
             ) : errorMessage ? (
