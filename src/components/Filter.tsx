@@ -1,7 +1,7 @@
-import { Button, FormControl, InputLabel, MenuItem, Select, Tooltip } from "@mui/material";
-import { useState, type ChangeEvent } from "react";
-import { FiRefreshCw } from "react-icons/fi";
-import { FaArrowUp, FaSearch } from "react-icons/fa";
+import { FormControl, IconButton, InputLabel, MenuItem, Select, Tooltip, type SelectChangeEvent } from "@mui/material";
+import { useState } from "react";
+import { FaSearch } from "react-icons/fa";
+import { RiFilterOffLine, RiSortAsc } from "react-icons/ri";
 
 type Category = {
     categoryId: number,
@@ -20,7 +20,7 @@ const Filter = () => {
         { categoryId: 8, categoryName: "PC Case" },
     ];
     const [category, setCategory] = useState<string>("all");
-    const handleCategoryChange = (event: ChangeEvent<HTMLSelectElement>) => {
+    const handleCategoryChange = (event: SelectChangeEvent): void => {
         setCategory(event.target.value)
     };
     return (
@@ -37,7 +37,7 @@ const Filter = () => {
                 <FormControl variant="outlined" size="small"
                     className="text-slate-800 border-slate-700">
                     <InputLabel id="category-select-label">Category</InputLabel>
-                    <Select labelId="category-select-label" label="Category" value={category} onChange={() => handleCategoryChange}
+                    <Select labelId="category-select-label" label="Category" value={category} onChange={handleCategoryChange}
                         className="min-w-[120px] text-slate-800 border-slate-700">
                         <MenuItem value="all">All</MenuItem>
                         {categories.map((category: Category) => (
@@ -48,21 +48,19 @@ const Filter = () => {
 
                 {/* Sort & Filter */}
                 <Tooltip title="Sorted by price: asc">
-                    <Button variant="outlined" color="secondary"
+                    <IconButton size="small"
                         className="flex items-center gap-2 h-10">
-                        Sort By
-                        <FaArrowUp />
-                    </Button>
+                        <RiSortAsc />
+                    </IconButton>
                 </Tooltip>
                 <Tooltip title="Clear Filter">
-                    <Button variant="outlined" color="secondary"
+                    <IconButton size="small"
                         className="flex items-center gap-2 h-10">
-                        Clear Filter
-                        <FiRefreshCw />
-                    </Button>
+                        <RiFilterOffLine />
+                    </IconButton>
                 </Tooltip>
             </div>
-        </div>
+        </div >
     )
 }
 
