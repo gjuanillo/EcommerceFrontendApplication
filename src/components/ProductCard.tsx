@@ -33,12 +33,13 @@ const ProductCard = ({
         setViewProductModal(true);
     };
 
+
     return (
         <div className="rounded-lg shadow-xl overflow-hidden transition-shadow duration-300">
             <div className="w-full overflow-hidden aspect-[3/2]" onClick={() => {
                 handleProductView(product);
             }}>
-                <img src={image} alt={productName} className="w-full h-full cursor-pointer transition-transform duration-300 transform hover:scale-105" />
+                <img src={`${import.meta.env.VITE_BACK_END_URL}/images${image}`} alt={productName} className="w-full h-full cursor-pointer transition-transform duration-300 transform hover:scale-105" />
             </div>
             <div className="p-4">
                 <h2 className="text-lg font-semibold mb-2 cursor-pointer" onClick={() => {

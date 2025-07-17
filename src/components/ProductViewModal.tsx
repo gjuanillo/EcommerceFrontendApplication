@@ -33,7 +33,7 @@ function ProductViewModal({ open, setOpen, product, isAvailable }: ModalProps) {
                         >
                             {image && (
                                 <div className='flex justify-center aspect-[3/2]'>
-                                    <img src={image} alt={productName} />
+                                    <img src={`${import.meta.env.VITE_BACK_END_URL}/images${image}`} alt={productName} />
                                 </div>
                             )}
                             <div className='px-6 pt-10 pb-2'>
