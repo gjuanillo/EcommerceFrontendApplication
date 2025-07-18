@@ -12,14 +12,17 @@ const Paginations = ({ pageNumber, productNumber }: PaginationProps) => {
     const navigate = useNavigate();
     const paramValue = searchParams.get("page") ? Number(searchParams.get("page")) : 1;
 
-    const onChangeHandler = (event, value) => {
-        params.set("page", value.toString())
-        navigate(`${pathName}?${params.toString()}`)
-    }
+    const onChangeHandler = (_event: React.ChangeEvent<unknown>, value: number) => {
+        params.set("page", value.toString());
+        navigate(`${pathName}?${params.toString()}`);
+    };
     return (
-        <>
+        <div className="flex items-center justify-between mt-8 flex-wrap">
+            <p className="text-sm text-gray-400 mt-2 sm:mt-0 sm:ml-4">
+                Showing page {paramValue} of {pageNumber} &mdash; Total {productNumber} items 
+            </p>
             <Pagination onChange={onChangeHandler} page={paramValue} count={pageNumber} shape="rounded" defaultPage={1} siblingCount={2} />
-        </>
+        </div>
     );
 }
 

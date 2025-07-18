@@ -1,5 +1,5 @@
-import { Button, Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/react'
-import type { ProductType } from '../types/ProductType';
+import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/react'
+import type { ProductType } from '../../types/ProductType';
 import type React from 'react';
 import { Divider } from '@mui/material';
 import Status from './Status';

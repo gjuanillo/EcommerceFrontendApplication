@@ -1,14 +1,14 @@
 import { FaExclamationTriangle } from "react-icons/fa";
-import ProductCard from "./ProductCard";
+import ProductCard from "../shared/ProductCard";
 import { useSelector } from "react-redux";
-import { useAppDispatch, type RootState } from "../store/reducers/store";
-import type { ProductType } from "../types/ProductType";
+import { useAppDispatch, type RootState} from "../../store/reducers/store";
+import type { ProductType } from "../../types/ProductType";
 import Filter from "./Filter";
-import useProductFilter from "./useProductFilter";
+import useProductFilter from "../../hooks/useProductFilter";
 import { useEffect } from "react";
-import { fetchCategories } from "../store/actions";
-import ProductSkeletonLoader from "./ProductSkeletonLoader";
-import Paginations from "./Paginations";
+import { fetchCategories } from "../../store/actions";
+import ProductSkeletonLoader from "../shared/ProductSkeletonLoader";
+import Paginations from "../shared/Paginations";
 
 const Products = () => {
     const { isLoading, errorMessage } = useSelector((state: RootState) => state.errors)
