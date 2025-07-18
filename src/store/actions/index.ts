@@ -2,7 +2,7 @@ import type { Dispatch } from "@reduxjs/toolkit";
 import api from "../../api/api";
 import axios from "axios";
 
-export const fetchProducts = (queryString: string) => async (dispatch: Dispatch) => {
+export const fetchProducts = (queryString?: string) => async (dispatch: Dispatch) => {
     try {
         dispatch({ type: "IS_FETCHING" })
         const { data } = await api.get(`/public/products?${queryString}`);

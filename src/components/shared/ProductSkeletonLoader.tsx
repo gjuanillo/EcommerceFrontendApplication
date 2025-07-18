@@ -1,9 +1,13 @@
 import { Skeleton } from "@mui/material";
 
-const ProductSkeletonLoader = () => {
+type ProductSkeletonLoaderProps = {
+    size?: number;
+}
+
+const ProductSkeletonLoader = ({ size = 8 }: ProductSkeletonLoaderProps) => {
     return (
         <div className="grid 2xl:grid-cols-4 lg:grid-cols-3 sm:grid-cols-2 gap-y-6 gap-x-6 pt-14 pb-6">
-            {Array.from({ length: 8 }).map((_, idx) => (
+            {Array.from({ length: size }).map((_, idx) => (
                 <div key={idx} className="rounded-lg shadow-xl overflow-hidden transition-shadow duration-300">
                     {/* Image Skeleton */}
                     <div className="w-full overflow-hidden aspect-[3/2]">
