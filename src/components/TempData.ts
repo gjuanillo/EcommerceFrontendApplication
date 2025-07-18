@@ -1,4 +1,5 @@
 import type { ProductType } from "../types/ProductType";
+import { bnrImg1, bnrImg2, bnrImg3 } from "../utils/constants";
 
 export const products: ProductType[] = [{
     productId: 652,
@@ -31,4 +32,28 @@ export const products: ProductType[] = [{
     price: 2550.0,
     discount: 0.0,
 }
-] 
+]
+
+export const HeroBannerList = [
+    {
+        id: 1,
+        image: bnrImg3,
+        title: "Built for Gamers",
+        subtitle: "Powerful Components",
+        description: "Play at the highest quality with latest released components",
+    },
+    {
+        id: 2,
+        image: bnrImg2,
+        title: "Upgrade your experience",
+        subtitle: "Peripherals Showcase",
+        description: "Discover top-performing keyboards, mice, headsets, and more",
+    },
+    {
+        id: 3,
+        image: bnrImg1,
+        title: "License to Create",
+        subtitle: "Software Essentials",
+        description: "Get genuine Windows, Adobe, and productivity software at great prices",
+    }
+]

@@ -6,7 +6,6 @@ export const fetchProducts = (queryString: string) => async (dispatch: Dispatch)
     try {
         dispatch({ type: "IS_FETCHING" })
         const { data } = await api.get(`/public/products?${queryString}`);
-        console.log(data.pageNumber);
         dispatch({
             type: "FETCH_PRODUCTS",
             payload: data.content,
@@ -18,8 +17,6 @@ export const fetchProducts = (queryString: string) => async (dispatch: Dispatch)
         });
         dispatch({ type: "IS_SUCCESS" })
     } catch (error: unknown) {
-        console.log(error);
-
         let errorMessage = "Failed to fetch products";
 
         if (axios.isAxiosError(error)) {
@@ -43,7 +40,6 @@ export const fetchCategories = () => async (dispatch: Dispatch) => {
     try {
         dispatch({ type: "CATEGORY_LOADER" })
         const { data } = await api.get(`/public/categories`);
-        console.log(data.pageNumber);
         dispatch({
             type: "FETCH_CATEGORIES",
             payload: data.content,
@@ -55,7 +51,6 @@ export const fetchCategories = () => async (dispatch: Dispatch) => {
         });
         dispatch({ type: "CATEGORY_SUCCESS" })
     } catch (error: unknown) {
-        console.log(error);
 
         let errorMessage = "Failed to fetch categories";
 
