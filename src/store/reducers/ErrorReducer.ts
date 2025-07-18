@@ -3,11 +3,15 @@ import type { AnyAction } from "@reduxjs/toolkit";
 interface initialStateType {
     isLoading: boolean;
     errorMessage: string | null
+    categoryLoader: boolean;
+    categoryError: string | null;
 }
 
 const initialState: initialStateType = {
     isLoading: false,
-    errorMessage: null
+    errorMessage: null,
+    categoryLoader: false,
+    categoryError: null
 };
 
 export const ErrorReducer = (state = initialState, action: AnyAction) => {
@@ -29,6 +33,17 @@ export const ErrorReducer = (state = initialState, action: AnyAction) => {
                 ...state,
                 isLoading: false,
                 errorMessage: action.payload,
+            };
+        case "CATEGORY_SUCCESS":
+            return {
+                ...state,
+                categoryLoader: false,
+                categoryError: null
+            };
+        case "CATEGORY_LOADER":
+            return {
+                ...state,
+                categoryLoader: true,
             };
         default:
             return state;

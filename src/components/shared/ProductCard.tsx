@@ -1,7 +1,8 @@
 import { useState } from "react";
-import type { ProductType } from "../types/ProductType";
+import type { ProductType } from "../../types/ProductType";
 import { FaShoppingCart } from "react-icons/fa";
 import ProductViewModal from "./ProductViewModal";
+import truncateText from "../../utils/truncateText";
 
 const ProductCard = ({
     productId,
@@ -44,9 +45,9 @@ const ProductCard = ({
             <div className="p-4">
                 <h2 className="text-lg font-semibold mb-2 cursor-pointer" onClick={() => {
                     handleProductView(product)
-                }}>{productName}</h2>
+                }}>{truncateText(productName, 50)}</h2>
                 <div className="min-h-20 max-h-20">
-                    <p className="text-gray-600 text-sm">{description}</p>
+                    <p className="text-gray-600 text-sm">{truncateText(description, 80)}</p>
                 </div>
                 <div className="flex items-center justify-between">
                     {specialPrice ? (

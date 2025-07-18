@@ -1,11 +1,11 @@
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
 import { useSearchParams } from "react-router-dom";
 import { fetchProducts } from "../store/actions";
+import { useAppDispatch } from "../store/reducers/store";
 
 const useProductFilter = () => {
     const [searchParams] = useSearchParams();
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     useEffect(() => {
         const params = new URLSearchParams();
@@ -25,7 +25,6 @@ const useProductFilter = () => {
         }
 
         const queryString = params.toString();
-        console.log("Query ", queryString);
 
         dispatch(fetchProducts(queryString));
     }, [dispatch, searchParams]);
