@@ -8,10 +8,11 @@ import useProductFilter from "./useProductFilter";
 import { useEffect } from "react";
 import { fetchCategories } from "../store/actions";
 import ProductSkeletonLoader from "./ProductSkeletonLoader";
+import Paginations from "./Paginations";
 
 const Products = () => {
     const { isLoading, errorMessage } = useSelector((state: RootState) => state.errors)
-    const { products, categories } = useSelector((state: RootState) => state.products)
+    const { products, categories, pagination } = useSelector((state: RootState) => state.products)
     const dispatch = useAppDispatch();
     useProductFilter();
     useEffect(() => {
@@ -33,6 +34,9 @@ const Products = () => {
                         {products && products.map((item: ProductType, i: number) => (
                             <ProductCard key={i} {...item} />
                         ))}
+                    </div>
+                    <div className="flex justify-end pt-10">
+                        <Paginations pageNumber={pagination?.totalPages} productNumber={pagination?.totalElements} />
                     </div>
                 </div>
             )
