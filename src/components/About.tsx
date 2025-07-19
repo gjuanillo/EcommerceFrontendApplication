@@ -1,4 +1,3 @@
-import type { Description } from "@headlessui/react";
 import ProductCard from "./shared/ProductCard";
 import { products } from "./TempData";
 
