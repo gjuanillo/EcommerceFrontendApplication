@@ -23,7 +23,8 @@ const Home = () => {
 
             <div className="py-5">
                 <div className="flex flex-col justify-center items-center space-y-2">
-                    <h1 className="text-slate-800 text-4xl font-bold"><span>Find what you need</span></h1>
+                    <h1 className="text-slate-800 text-3xl font-bold"><span>Find what you need</span></h1>
+                    <p className="text-slate-500 text-xl font-semibold"><span>Discover our products at the lowest price</span></p>
                 </div>
             </div>
 
