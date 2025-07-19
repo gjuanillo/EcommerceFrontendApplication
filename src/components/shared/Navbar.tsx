@@ -48,7 +48,7 @@ const Navbar = () => {
                     <li className="font-[500] transition-all duration-150">
                         <Link className={`${path === "/cart" ? "text-white font-semibold" :
                             "text-slate-200 hover:text-slate-400"}`} to="/cart">
-                            <Badge badgeContent={1} color="primary" overlap="circular"
+                            <Badge badgeContent={0} color="primary" overlap="circular"
                                 anchorOrigin={{ vertical: 'top', horizontal: 'right' }}>
                                 <FaShoppingCart size={25} />
                             </Badge>
@@ -63,7 +63,7 @@ const Navbar = () => {
                     </li>
                 </ul>
                 <div className="sm:hidden flex items-center sm:mt-0 mt-2">
-                    <Hamburger toggled={navbarOpen} toggle={setNavbarOpen} size={20}/>
+                    <Hamburger toggled={navbarOpen} toggle={setNavbarOpen} size={20} />
                 </div>
             </div>
         </div>
