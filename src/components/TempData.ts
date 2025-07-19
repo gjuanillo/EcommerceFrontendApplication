@@ -4,7 +4,7 @@ import { bnrImg1, bnrImg2, bnrImg3 } from "../utils/constants";
 export const products: ProductType[] = [{
     productId: 652,
     productName: "Iphone Xs max",
-    image: "https://placehold.co/600x400",
+    image: "/f68641e2-ee89-4c1d-a5bf-3de52421113f.png",
     description: "Experience the latest in mobile technology",
     quantity: 10,
     price: 1450.0,
@@ -15,7 +15,7 @@ export const products: ProductType[] = [{
 
     productId: 654,
     productName: "MacBook Air M2s",
-    image: "https://placehold.co/600x400",
+    image: "/f68641e2-ee89-4c1d-a5bf-3de52421113f.png",
     description: "Ultra-thin laptop with Apple's M2 chip",
     quantity: 0,
     price: 2550.0,
@@ -26,7 +26,7 @@ export const products: ProductType[] = [{
 
     productId: 657,
     productName: "Iphone 17",
-    image: "https://placehold.co/600x400",
+    image: "/f68641e2-ee89-4c1d-a5bf-3de52421113f.png",
     description: "Latest Iphone Product",
     quantity: 0,
     price: 2550.0,

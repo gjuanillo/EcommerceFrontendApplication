@@ -1,3 +1,7 @@
+import type { Description } from "@headlessui/react";
+import ProductCard from "./shared/ProductCard";
+import { products } from "./TempData";
+
 const About = () => {
     return (
         <div className="max-w-7xl mx-auto px-4 py-8">
@@ -17,6 +21,21 @@ const About = () => {
                     <img src="https://placehold.co/600x400" alt="About Us"
                         className="w-full h-auto rounded-lg shadow-lg transform 
                         transition-transform duration-300 hover:scale-105" />
+                </div>
+            </div>
+            <div>
+                <h1 className="text-slate-800 text-4xl font-bold text-center mb-12">
+                    Our Products
+                </h1>
+                <div className="grid grid-cols-1 mb:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {products.map((product, i) => (
+                        <ProductCard key={i} image={product.image}
+                            productName={product.productName}
+                            description={product.description}
+                            specialPrice={product.specialPrice} price={product.price}
+                            productId={product.productId} quantity={product.quantity}
+                            discount={product.discount} />
+                    ))}
                 </div>
             </div>
         </div>
