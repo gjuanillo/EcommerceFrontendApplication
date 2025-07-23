@@ -9,7 +9,7 @@ import 'swiper/css/autoplay'
 import { HeroBannerList } from '../TempData';
 import { Link } from 'react-router-dom';
 
-const colors = ["#FDC200", "#FF2C2C", "#21AD61", "#723DA6"]
+const colors = ["#5E936C", "#3E5F44", "#21AD61", "#E8FFD7"]
 
 const HeroBanner = () => {
     return (
