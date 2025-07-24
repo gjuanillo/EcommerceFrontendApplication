@@ -5,6 +5,7 @@ import ProductViewModal from "./ProductViewModal";
 import truncateText from "../../utils/truncateText";
 import { useAppDispatch } from "../../store/reducers/store";
 import { addToCart } from "../../store/actions";
+import toast from 'react-hot-toast';
 
 const ProductCard = ({
     productId,
@@ -16,6 +17,7 @@ const ProductCard = ({
     discount,
     specialPrice
 }: ProductType) => {
+    const qty = 1;
     const [viewProductModal, setViewProductModal] = useState<boolean>(false);
     const buttonLoader: boolean = false;
     const [selectedViewProduct, setSelectedViewProduct] = useState<ProductType>();
@@ -38,7 +40,8 @@ const ProductCard = ({
     };
 
     const addToCartHandler = (cartItems: ProductType) => {
-        dispatch(addToCart(cartItems, 1))
+        //Self Note -> Add a dynamic feature for adding custom product quantity for each card
+        dispatch(addToCart(cartItems, qty, toast))
     };
 
     return (
