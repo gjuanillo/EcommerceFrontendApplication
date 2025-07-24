@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { type ProductType } from "../../types/ProductType";
 import { HiOutlineTrash } from "react-icons/hi"
+import SetQuantity from "./SetQuantity";
 
 const ItemContent = ({
     productId,
@@ -13,7 +14,7 @@ const ItemContent = ({
     specialPrice
 }: ProductType) => {
 
-    const [currentQuantity, setCurrentQuantity] = useState(quantity);
+    const [currentQuantity, setCurrentQuantity] = useState<number>(quantity);
     return (
         <div className="grid md:grid-cols-5 grid-cols-4 md:text-md text-sm items-center border-t-[1px] border-slate-200">
             <div className="md:col-span-2 justify-self-start flex flex-col gap-2">
@@ -31,8 +32,15 @@ const ItemContent = ({
                     </button>
                 </div>
             </div>
-            <div>
-                {specialPrice}
+            <div className="justify-self-center lg:text-[17px] text-sm text-slate-600 font-semibold">
+                ${Number(specialPrice).toFixed(2)}
+            </div>
+            <div className="justify-self-center">
+                <SetQuantity quantity={currentQuantity} cardCounter={true}
+                    handleQtyIncrease={() => { }} handleQtyDecrease={() => { }} />
+            </div>
+            <div className="justify-self-center">
+                {Number(currentQuantity * Number(specialPrice)).toFixed(2)}
             </div>
         </div>
     )
