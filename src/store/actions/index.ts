@@ -1,6 +1,9 @@
 import type { Dispatch } from "@reduxjs/toolkit";
 import api from "../../api/api";
 import axios from "axios";
+import type { ProductType } from "../../types/ProductType";
+import type { RootState } from "../reducers/store";
+import { toast } from "react-hot-toast";
 
 export const fetchProducts = (queryString?: string) => async (dispatch: Dispatch) => {
     try {
@@ -70,3 +73,19 @@ export const fetchCategories = () => async (dispatch: Dispatch) => {
         });
     }
 };
+
+export const addToCart = (data: ProductType, qty = 1, tst: typeof toast) => (dispatch: Dispatch, getState: () => RootState) => {
+    const { products } = getState().products;
+    const getProduct = products.find((item: ProductType) =>
+        item.productId === data.productId);
+
+    const isQuantityExist = getProduct.quantity >= qty;
+
+    if (isQuantityExist) {
+        dispatch({ type: "ADD_CART", payload: { ...data, quantity: qty } });
+        tst.success(`${data?.productName} added to cart!`)
+        localStorage.setItem("cartItems", JSON.stringify(getState().carts.cart));
+    } else {
+        tst.error(`Error, ${data?.productName} not available!`)
+    }
+}

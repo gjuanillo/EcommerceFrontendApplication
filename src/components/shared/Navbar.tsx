@@ -1,6 +1,6 @@
 import { Badge } from "@mui/material";
 import { useState } from "react";
-import { FaShoppingCart, FaSignInAlt, FaStore } from "react-icons/fa";
+import { FaShoppingCart, FaSignInAlt } from "react-icons/fa";
 import { Link, useLocation } from "react-router-dom";
 import { Spiral as Hamburger } from 'hamburger-react'
 
@@ -11,7 +11,6 @@ const Navbar = () => {
         <div className="sm:h-[50px] h-[70px] bg-[#3E5F44] text-white z-50 flex items-center sticky top-0">
             <div className="lg:px-14 sm:px-8 px-4 w-full flex justify-between">
                 <Link to="/" className="flex items-center text-2xl font-bold">
-                    <FaStore className="mr-2 text-3xl" />
                     <span className="font-display">PC Lair</span>
                 </Link>
                 <ul className={`flex sm:gap-10 gap-4 sm:items-center text-slate-800 sm:static 

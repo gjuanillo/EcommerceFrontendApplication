@@ -3,6 +3,9 @@ import type { ProductType } from "../../types/ProductType";
 import { FaShoppingCart } from "react-icons/fa";
 import ProductViewModal from "./ProductViewModal";
 import truncateText from "../../utils/truncateText";
+import { useAppDispatch } from "../../store/reducers/store";
+import { addToCart } from "../../store/actions";
+import toast from 'react-hot-toast';
 
 const ProductCard = ({
     productId,
@@ -14,10 +17,12 @@ const ProductCard = ({
     discount,
     specialPrice
 }: ProductType) => {
+    const qty = 1;
     const [viewProductModal, setViewProductModal] = useState<boolean>(false);
     const buttonLoader: boolean = false;
     const [selectedViewProduct, setSelectedViewProduct] = useState<ProductType>();
     const isAvailable: number | boolean = quantity && Number(quantity) > 0;
+    const dispatch = useAppDispatch();
     const product: ProductType = {
         productId,
         productName,
@@ -34,6 +39,10 @@ const ProductCard = ({
         setViewProductModal(true);
     };
 
+    const addToCartHandler = (cartItems: ProductType) => {
+        //Self Note -> Add a dynamic feature for adding custom product quantity for each card
+        dispatch(addToCart(cartItems, qty, toast))
+    };
 
     return (
         <div className="rounded-lg shadow-xl overflow-hidden transition-shadow duration-300">
@@ -59,7 +68,9 @@ const ProductCard = ({
                         <span className="text-xl font-bold text-slate-700">{"  "}${Number(price).toFixed(2)}</span>
                     )}
 
-                    <button disabled={!isAvailable || buttonLoader} onClick={() => { }} className={`bg-blue-500 ${isAvailable ? "opacity-100 hover:bg-blue-600"
+                    <button disabled={!isAvailable || buttonLoader} onClick={() => addToCartHandler(
+                        product
+                    )} className={`bg-blue-500 ${isAvailable ? "opacity-100 hover:bg-blue-600"
                         : "opacity-60"} text-white py-2 px-3 rounded-lg items-center transition-colors duration-300 w-36 flex justify-center`}>
                         <FaShoppingCart className="mr-2" />
                         {isAvailable ? "Add to Cart" : "Out of Stock"}
