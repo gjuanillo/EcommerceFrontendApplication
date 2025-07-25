@@ -3,7 +3,7 @@ import { type ProductType } from "../../types/ProductType";
 import { HiOutlineTrash } from "react-icons/hi"
 import SetQuantity from "./SetQuantity";
 import { useAppDispatch } from "../../store/reducers/store";
-import { decreaseCartQuantity, increaseCartQuantity } from "../../store/actions";
+import { decreaseCartQuantity, increaseCartQuantity, removeFromCart } from "../../store/actions";
 import toast from "react-hot-toast";
 
 const ItemContent = ({
@@ -35,6 +35,11 @@ const ItemContent = ({
             dispatch(decreaseCartQuantity(cartItems, newQuantity));
         }
     };
+
+    const removeItemFromCart = (cartItems: ProductType) => {
+        dispatch(removeFromCart(cartItems, toast));
+    };
+
     return (
         <div className="grid md:grid-cols-5 grid-cols-4 md:text-md text-sm items-center border-t-[1px] border-slate-200">
             <div className="md:col-span-2 justify-self-start flex flex-col gap-2">
@@ -45,9 +50,18 @@ const ItemContent = ({
                     <img src={`${import.meta.env.VITE_BACK_END_URL}/images${image}`} alt={productName} className="md:h-32 sm:h-21 h-12 md:w-32 sm:w-21 w-12 object-cover rounded-md" />
                 </div>
                 <div className="flex items-start gap-5 mt-3">
-                    <button onClick={() => { }}
-                        className="flex items-center font-semibold cursor-pointer border rounded-sm hover:bg-rose-800 hover:text-white transition-colors duration-300 space-x-2 px-4 py-1 text-xs text-rose-600">
-                        <HiOutlineTrash size={16} />
+                    <button
+                        onClick={() => removeItemFromCart({
+                            image,
+                            productName,
+                            description,
+                            specialPrice,
+                            price,
+                            productId,
+                            quantity,
+                        })}
+                        className="flex items-center font-semibold space-x-2 px-4 py-1 text-xs border border-rose-600 text-rose-600 rounded-md hover:bg-red-50 transition-colors duration-200">
+                        <HiOutlineTrash size={16} className="text-rose-600" />
                         Remove
                     </button>
                 </div>

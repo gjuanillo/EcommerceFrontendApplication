@@ -134,3 +134,9 @@ export const decreaseCartQuantity =
         });
         localStorage.setItem("cartItems", JSON.stringify(getState().carts.cart));
     }
+
+export const removeFromCart = (data: ProductType, tst: typeof toast) => (dispatch: Dispatch, getState: () => RootState) => {
+    dispatch({ type: "REMOVE_CART", payload: data });
+    tst.success(`${data.productName} removed from cart`);
+    localStorage.setItem("cartItems", JSON.stringify(getState().carts.cart));
+}
