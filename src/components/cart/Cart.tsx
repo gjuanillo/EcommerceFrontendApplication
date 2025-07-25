@@ -6,6 +6,7 @@ import ItemContent from "./ItemContent";
 import type { ProductType } from "../../types/ProductType";
 import type { CartStateType } from "../../types/CartStateType";
 import CartEmpty from "./CartEmpty";
+import { formatPrice } from "../../utils/formatPrice";
 
 const Cart = () => {
     const cartState = useSelector((state: RootState) => state.carts); // full cart slice
@@ -59,7 +60,7 @@ const Cart = () => {
                 <div className="flex text-sm gap-1 flex-col">
                     <div className="flex justify-between w-full md:text-lg text-sm font-semibold">
                         <span>Subtotal</span>
-                        <span> ${Number(newCart.totalPrice).toFixed(2)}</span>
+                        <span>{formatPrice(Number(newCart.totalPrice))}</span>
                     </div>
                     <p className="text-slate-500">
                         Taxes and shipping are calculated at checkout
