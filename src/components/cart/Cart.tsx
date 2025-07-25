@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import ItemContent from "./ItemContent";
 import type { ProductType } from "../../types/ProductType";
 import type { CartStateType } from "../../types/CartStateType";
+import CartEmpty from "./CartEmpty";
 
 const Cart = () => {
     const cartState = useSelector((state: RootState) => state.carts); // full cart slice
@@ -18,7 +19,7 @@ const Cart = () => {
     };
 
     if (!cart || cart.length === 0) {
-        return <h1>Cart is empty</h1>
+        return <CartEmpty />
     }
     return (
         <div className="lg:px-14 sm:px-8 px-4 py-10">
@@ -58,7 +59,7 @@ const Cart = () => {
                 <div className="flex text-sm gap-1 flex-col">
                     <div className="flex justify-between w-full md:text-lg text-sm font-semibold">
                         <span>Subtotal</span>
-                        <span>{Number(newCart.totalPrice).toFixed(2)}</span>
+                        <span> ${Number(newCart.totalPrice).toFixed(2)}</span>
                     </div>
                     <p className="text-slate-500">
                         Taxes and shipping are calculated at checkout
