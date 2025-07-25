@@ -125,3 +125,12 @@ export const increaseCartQuantity =
             }
 
         };
+
+export const decreaseCartQuantity =
+    (data: ProductType, newQuantity: number) => (dispatch: Dispatch, getState: () => RootState) => {
+        dispatch({
+            type: "ADD_CART",
+            payload: { ...data, quantity: newQuantity },
+        });
+        localStorage.setItem("cartItems", JSON.stringify(getState().carts.cart));
+    }

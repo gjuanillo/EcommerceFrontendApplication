@@ -3,7 +3,7 @@ import { type ProductType } from "../../types/ProductType";
 import { HiOutlineTrash } from "react-icons/hi"
 import SetQuantity from "./SetQuantity";
 import { useAppDispatch } from "../../store/reducers/store";
-import { increaseCartQuantity } from "../../store/actions";
+import { decreaseCartQuantity, increaseCartQuantity } from "../../store/actions";
 import toast from "react-hot-toast";
 
 const ItemContent = ({
@@ -27,6 +27,14 @@ const ItemContent = ({
             setCurrentQuantity
         ));
     }
+
+    const handleQtyDecrease = (cartItems: ProductType) => {
+        if (currentQuantity > 1) {
+            const newQuantity = currentQuantity - 1;
+            setCurrentQuantity(newQuantity);
+            dispatch(decreaseCartQuantity(cartItems, newQuantity));
+        }
+    };
     return (
         <div className="grid md:grid-cols-5 grid-cols-4 md:text-md text-sm items-center border-t-[1px] border-slate-200">
             <div className="md:col-span-2 justify-self-start flex flex-col gap-2">
@@ -60,7 +68,18 @@ const ItemContent = ({
                             discount,
                             specialPrice
                         }
-                    )} handleQtyDecrease={() => { }} />
+                    )} handleQtyDecrease={() => {
+                        handleQtyDecrease({
+                            productId,
+                            productName,
+                            image,
+                            description,
+                            quantity,
+                            price,
+                            discount,
+                            specialPrice
+                        })
+                    }} />
             </div>
             <div className="justify-self-center">
                 {Number(currentQuantity * Number(specialPrice)).toFixed(2)}
