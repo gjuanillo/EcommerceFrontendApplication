@@ -1,5 +1,12 @@
-const SetQuantity = ({ quantity, cardCounter, handleQtyIncrease, handleQtyDecrease }) => {
-    const btnStyles: string = "border-[1.2px] border-slate-800 px-3 py-1 rounded";
+type SetQuantityProps = {
+    quantity: number;
+    cardCounter: boolean;
+    handleQtyIncrease: () => void;
+    handleQtyDecrease: () => void;
+};
+
+const SetQuantity = ({ quantity, cardCounter, handleQtyIncrease, handleQtyDecrease }: SetQuantityProps) => {
+    const btnStyles: string = "border-[1.2px] border-slate-800 cursor-pointer px-3 py-1 rounded";
     return (
         <div className="flex gap-8 items-center">
             {cardCounter ? null : <div className="font-semibold">QUANTITY</div>}
@@ -9,12 +16,13 @@ const SetQuantity = ({ quantity, cardCounter, handleQtyIncrease, handleQtyDecrea
                     -
                 </button>
                 <div>{quantity}</div>
-                <button disabled={quantity <= 1}
+                <button
+                    onClick={handleQtyIncrease}
                     className={btnStyles}>
                     +
                 </button>
             </div>
-        </div>
+        </div >
     )
 }
 

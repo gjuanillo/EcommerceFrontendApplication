@@ -2,6 +2,9 @@ import { useState } from "react";
 import { type ProductType } from "../../types/ProductType";
 import { HiOutlineTrash } from "react-icons/hi"
 import SetQuantity from "./SetQuantity";
+import { useAppDispatch } from "../../store/reducers/store";
+import { increaseCartQuantity } from "../../store/actions";
+import toast from "react-hot-toast";
 
 const ItemContent = ({
     productId,
@@ -15,13 +18,22 @@ const ItemContent = ({
 }: ProductType) => {
 
     const [currentQuantity, setCurrentQuantity] = useState<number>(quantity);
+    const dispatch = useAppDispatch();
+    const handleQtyIncrease = (cartItems: ProductType) => {
+        dispatch(increaseCartQuantity(
+            cartItems,
+            toast,
+            currentQuantity,
+            setCurrentQuantity
+        ));
+    }
     return (
         <div className="grid md:grid-cols-5 grid-cols-4 md:text-md text-sm items-center border-t-[1px] border-slate-200">
             <div className="md:col-span-2 justify-self-start flex flex-col gap-2">
                 <div className="flex md:flex-row flex-col lg:gap-4 sm:gap-3 gap-0 items-start">
                     <h3 className="lg:text-[17px] text-sm font-semibold text-slate-600">{productName}</h3>
                 </div>
-                <div className="md:w-32 sm:w-21 w-12">
+                <div className="md:w-32 mx-3 sm:w-21 w-12">
                     <img src={`${import.meta.env.VITE_BACK_END_URL}/images${image}`} alt={productName} className="md:h-32 sm:h-21 h-12 md:w-32 sm:w-21 w-12 object-cover rounded-md" />
                 </div>
                 <div className="flex items-start gap-5 mt-3">
@@ -37,7 +49,18 @@ const ItemContent = ({
             </div>
             <div className="justify-self-center">
                 <SetQuantity quantity={currentQuantity} cardCounter={true}
-                    handleQtyIncrease={() => { }} handleQtyDecrease={() => { }} />
+                    handleQtyIncrease={() => handleQtyIncrease(
+                        {
+                            productId,
+                            productName,
+                            image,
+                            description,
+                            quantity,
+                            price,
+                            discount,
+                            specialPrice
+                        }
+                    )} handleQtyDecrease={() => { }} />
             </div>
             <div className="justify-self-center">
                 {Number(currentQuantity * Number(specialPrice)).toFixed(2)}

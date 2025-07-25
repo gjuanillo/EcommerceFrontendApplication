@@ -4,6 +4,7 @@ import axios from "axios";
 import type { ProductType } from "../../types/ProductType";
 import type { RootState } from "../reducers/store";
 import { toast } from "react-hot-toast";
+import type React from "react";
 
 export const fetchProducts = (queryString?: string) => async (dispatch: Dispatch) => {
     try {
@@ -88,4 +89,39 @@ export const addToCart = (data: ProductType, qty = 1, tst: typeof toast) => (dis
     } else {
         tst.error(`Error, ${data?.productName} not available!`)
     }
-}
+};
+
+type SetQuantityFn = React.Dispatch<React.SetStateAction<number>>;
+export const increaseCartQuantity =
+    (
+        data: ProductType,
+        tst: typeof toast,
+        currentQuantity: number,
+        setCurrentQuantity: SetQuantityFn
+    ) =>
+        (dispatch: Dispatch, getState: () => RootState) => {
+            // Find the product
+            const { products } = getState().products;
+            console.log(data);
+
+
+            const getProduct = products.find(
+                (item: ProductType) => item.productId === data.productId
+            );
+
+            const isQuantityExist = getProduct.quantity >= currentQuantity + 1;
+
+            if (isQuantityExist) {
+                const newQuantity = currentQuantity + 1;
+                setCurrentQuantity(newQuantity);
+
+                dispatch({
+                    type: "ADD_CART",
+                    payload: { ...data, quantity: newQuantity + 1 },
+                });
+                localStorage.setItem("cartItems", JSON.stringify(getState().carts.cart));
+            } else {
+                tst.error("Quantity Reached to Limit");
+            }
+
+        };
