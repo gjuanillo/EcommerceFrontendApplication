@@ -1,13 +1,8 @@
 import type { AnyAction } from "@reduxjs/toolkit";
-import type { ProductType } from "../../types/ProductType";
+import type { CartStateType } from "../../types/CartStateType";
 
-interface CartState {
-    cart: ProductType[];
-    totalPrice: number;
-    cartId: number | null;
-}
 
-const initialState: CartState = {
+const initialState: CartStateType = {
     cart: [],
     totalPrice: 0,
     cartId: null,
@@ -42,6 +37,13 @@ export const cartReducer = (state = initialState, action: AnyAction) => {
                         cart: newCart,
                     };
                 }
+            }
+        case "REMOVE_CART":
+            return {
+                ...state,
+                cart: state.cart.filter(
+                    (item) => item.productId !== action.payload.productId
+                ),
             }
     }
 

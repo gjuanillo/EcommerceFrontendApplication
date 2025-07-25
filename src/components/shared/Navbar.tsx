@@ -3,10 +3,13 @@ import { useState } from "react";
 import { FaShoppingCart, FaSignInAlt } from "react-icons/fa";
 import { Link, useLocation } from "react-router-dom";
 import { Spiral as Hamburger } from 'hamburger-react'
+import { useSelector } from "react-redux";
+import type { RootState } from "../../store/reducers/store";
 
 const Navbar = () => {
     const path = useLocation().pathname;
     const [navbarOpen, setNavbarOpen] = useState(false);
+    const { cart } = useSelector((state: RootState) => state.carts);
     return (
         <div className="sm:h-[50px] h-[70px] bg-[#3E5F44] text-white z-50 flex items-center sticky top-0">
             <div className="lg:px-14 sm:px-8 px-4 w-full flex justify-between">
@@ -47,7 +50,7 @@ const Navbar = () => {
                     <li className="font-[500] transition-all duration-150">
                         <Link className={`${path === "/cart" ? "text-white font-semibold" :
                             "text-slate-200 hover:text-slate-300"}`} to="/cart">
-                            <Badge badgeContent={0} color="primary" overlap="circular"
+                            <Badge badgeContent={cart?.length || 0} color="primary" overlap="circular"
                                 anchorOrigin={{ vertical: 'top', horizontal: 'right' }}>
                                 <FaShoppingCart size={25} />
                             </Badge>
