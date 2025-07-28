@@ -4,19 +4,25 @@ import { useForm } from "react-hook-form";
 import { CgLogIn } from "react-icons/cg"
 import InputField from "../shared/InputField";
 import Loader from "../shared/Loader";
+import { useAppDispatch } from "../../store/reducers/store";
+import { authenticateLogin } from "../../store/actions";
+import toast from "react-hot-toast";
+import type { LoginType } from "../../types/LoginType";
 
 const Login = () => {
     const navigate = useNavigate();
     const [loader, setLoader] = useState<boolean>(false);
+    const dispatch = useAppDispatch();
     const {
         register,
         handleSubmit,
+        reset,
         formState: { errors },
-    } = useForm({ mode: "onTouched" });
+    } = useForm<LoginType>({ mode: "onTouched" });
 
-    const loginHandler = async (data) => {
-        console.log("Login");
-
+    const loginHandler = async (data: LoginType) => {
+        console.log(data);
+        dispatch(authenticateLogin(data, toast, reset, navigate, setLoader));
     };
     return (
         <div className="min-h-[calc(100vh-64px)] flex justify-center items-center">
@@ -39,9 +45,7 @@ const Login = () => {
                         placeHolder="username"
                         register={register}
                         errors={errors}
-                        className={undefined}
-                        min={undefined}
-                        value={undefined} />
+                    />
                     <InputField
                         label="Password"
                         required
@@ -51,9 +55,7 @@ const Login = () => {
                         placeHolder="password"
                         register={register}
                         errors={errors}
-                        className={undefined}
-                        min={undefined}
-                        value={undefined} />
+                    />
                 </div>
                 <button disabled={loader}
                     className="flex gap-2 items-center justify-center font-semibold w-full py-2
