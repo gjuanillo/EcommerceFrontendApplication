@@ -1,4 +1,20 @@
-const InputField = ({
+import type React from "react";
+
+interface InputFieldProps {
+    label: string;
+    id: string;
+    type: string;
+    errors: FieldErrors;
+    register: UseFormRegister<any>;
+    required?: boolean;
+    message?: string;
+    className?: string;
+    min?: number;
+    value?: string;
+    placeHolder?: string;
+}
+
+const InputField: React.FC<InputFieldProps> = ({
     label,
     id,
     type,
@@ -13,7 +29,7 @@ const InputField = ({
 }) => {
     return (
         <div className="flex flex-col gap-1 w-full">
-            <label htmlFor="id" className={`${className ? className : ""} font-semibold text-sm text-slate-800`}>
+            <label htmlFor={id} className={`${className ? className : ""} font-semibold text-sm text-slate-800`}>
                 {label}
             </label>
             <input type={type} id={id} placeholder={placeHolder} className={`${className ? className : ""} 

@@ -1,10 +1,11 @@
 import { Badge } from "@mui/material";
 import { useState } from "react";
-import { FaShoppingCart, FaSignInAlt } from "react-icons/fa";
+import { FaShoppingCart } from "react-icons/fa";
 import { Link, useLocation } from "react-router-dom";
 import { Spiral as Hamburger } from 'hamburger-react'
 import { useSelector } from "react-redux";
 import type { RootState } from "../../store/reducers/store";
+import { MdOutlineLogin } from "react-icons/md";
 
 const Navbar = () => {
     const path = useLocation().pathname;
@@ -59,7 +60,7 @@ const Navbar = () => {
                     <li className="font-[500] transition-all duration-150">
                         <Link className="flex justify-center items-center space-x-2 px-4 border rounded-xl hover:text-slate-400"
                             to="/login">
-                            <FaSignInAlt />
+                            <MdOutlineLogin />
                             <span>Login</span>
                         </Link>
                     </li>
