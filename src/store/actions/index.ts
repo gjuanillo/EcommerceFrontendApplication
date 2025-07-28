@@ -1,10 +1,13 @@
 import type { Dispatch } from "@reduxjs/toolkit";
 import api from "../../api/api";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import type { ProductType } from "../../types/ProductType";
 import type { RootState } from "../reducers/store";
 import { toast } from "react-hot-toast";
 import type React from "react";
+import type { LoginType } from "../../types/LoginType";
+import { type UseFormReset } from "react-hook-form";
+import type { useNavigate } from "react-router-dom";
 
 export const fetchProducts = (queryString?: string) => async (dispatch: Dispatch) => {
     try {
@@ -140,3 +143,26 @@ export const removeFromCart = (data: ProductType, tst: typeof toast) => (dispatc
     tst.success(`${data.productName} removed from cart`);
     localStorage.setItem("cartItems", JSON.stringify(getState().carts.cart));
 }
+
+export const authenticateLogin = (
+    sendData: LoginType,
+    tst: typeof toast, reset: UseFormReset<LoginType>,
+    navigate: ReturnType<typeof useNavigate>,
+    setLoader: React.Dispatch<React.SetStateAction<boolean>>) =>
+    async (dispatch: Dispatch) => {
+        try {
+            setLoader(true);
+            const { data } = await api.post('/auth/signin', sendData)
+            dispatch({ type: "LOGIN_USER", payload: data });
+            localStorage.setItem("auth", JSON.stringify(data));
+            reset();
+            tst.success("Login Success");
+            navigate("/")
+        } catch (err) {
+            const error = err as AxiosError<{ message: string }>;
+            console.log(error);
+            tst.error(error?.response?.data?.message || "Internal Server Error");
+        } finally {
+            setLoader(false);
+        }
+    }

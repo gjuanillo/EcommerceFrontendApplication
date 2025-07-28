@@ -1,75 +1,104 @@
 import { Badge } from "@mui/material";
 import { useState } from "react";
-import { FaShoppingCart, FaSignInAlt } from "react-icons/fa";
+import { FaShoppingCart } from "react-icons/fa";
 import { Link, useLocation } from "react-router-dom";
-import { Spiral as Hamburger } from 'hamburger-react'
+import { Spiral as Hamburger } from 'hamburger-react';
 import { useSelector } from "react-redux";
 import type { RootState } from "../../store/reducers/store";
+import { MdOutlineLogin } from "react-icons/md";
+import UserMenu from "../UserMenu";
 
 const Navbar = () => {
-    const path = useLocation().pathname;
-    const [navbarOpen, setNavbarOpen] = useState(false);
-    const { cart } = useSelector((state: RootState) => state.carts);
-    return (
-        <div className="sm:h-[50px] h-[70px] bg-[#3E5F44] text-white z-50 flex items-center sticky top-0">
-            <div className="lg:px-14 sm:px-8 px-4 w-full flex justify-between">
-                <Link to="/" className="flex items-center text-2xl font-bold">
-                    <span className="font-display">PC Lair</span>
+  const path = useLocation().pathname;
+  const [navbarOpen, setNavbarOpen] = useState(false);
+  const { cart } = useSelector((state: RootState) => state.carts);
+  const { user } = useSelector((state: RootState) => state.auth);
+
+  return (
+    <div className="sm:h-[50px] h-[70px] bg-[#3E5F44] text-white z-50 sticky top-0 flex items-center">
+      <div className="lg:px-14 sm:px-8 px-4 w-full flex justify-between items-center">
+        {/* Left: Logo */}
+        <Link to="/" className="flex items-center text-2xl font-bold">
+          <span className="font-display">PC Lair</span>
+        </Link>
+
+        {/* Right side */}
+        <div className="flex items-center gap-6">
+          {/* Desktop Menu */}
+          <ul className="hidden sm:flex gap-8 text-white items-center">
+            {[
+              { to: "/", label: "Home" },
+              { to: "/products", label: "Products" },
+              { to: "/about", label: "About" },
+              { to: "/contact", label: "Contact" }
+            ].map(({ to, label }) => (
+              <li key={to}>
+                <Link
+                  className={`${path === to ? "text-white font-semibold" : "text-slate-200 hover:text-slate-300"}`}
+                  to={to}
+                >
+                  {label}
                 </Link>
-                <ul className={`flex sm:gap-10 gap-4 sm:items-center text-slate-800 sm:static 
-                                absolute left-0 top-[70px] sm:shadow-none shadow-md ${navbarOpen ? "h-fit sm:pb-0 pb-5" : "h-0 overflow-hidden"}
-                                transition-all duration-100 sm:h-fit sm:bg-none bg-[#3E5F44] text-white sm:w-fit w-full sm:flex-row flex-col px-4 sm:px-0`}>
-                    <li className="font-[500] transition-all duration-150">
-                        <Link className={`${path === "/" ? "text-white font-semibold" :
-                            "text-slate-200 hover:text-slate-300"}`}
-                            to="/">
-                            Home
-                        </Link>
-                    </li>
-                    <li className="font-[500] transition-all duration-150">
-                        <Link className={`${path === "/products" ? "text-white font-semibold" :
-                            "text-slate-200 hover:text-slate-300"}`}
-                            to="/products">
-                            Products
-                        </Link>
-                    </li>
-                    <li className="font-[500] transition-all duration-150">
-                        <Link className={`${path === "/about" ? "text-white font-semibold" :
-                            "text-slate-200 hover:text-slate-300"}`}
-                            to="/about">
-                            About
-                        </Link>
-                    </li>
-                    <li className="font-[500] transition-all duration-150">
-                        <Link className={`${path === "/contact" ? "text-white font-semibold" :
-                            "text-slate-200 hover:text-slate-300"}`}
-                            to="/contact">
-                            Contact
-                        </Link>
-                    </li>
-                    <li className="font-[500] transition-all duration-150">
-                        <Link className={`${path === "/cart" ? "text-white font-semibold" :
-                            "text-slate-200 hover:text-slate-300"}`} to="/cart">
-                            <Badge badgeContent={cart?.length || 0} color="primary" overlap="circular"
-                                anchorOrigin={{ vertical: 'top', horizontal: 'right' }}>
-                                <FaShoppingCart size={25} />
-                            </Badge>
-                        </Link>
-                    </li>
-                    <li className="font-[500] transition-all duration-150">
-                        <Link className="flex justify-center items-center space-x-2 px-4 border rounded-xl hover:text-slate-400"
-                            to="/login">
-                            <FaSignInAlt />
-                            <span>Login</span>
-                        </Link>
-                    </li>
-                </ul>
-                <div className="sm:hidden flex items-center sm:mt-0 mt-2">
-                    <Hamburger toggled={navbarOpen} toggle={setNavbarOpen} size={20} />
-                </div>
-            </div>
+              </li>
+            ))}
+          </ul>
+
+          {/* Cart Icon */}
+          <Link to="/cart" className="text-white">
+            <Badge
+              badgeContent={cart?.length || 0}
+              color="primary"
+              overlap="circular"
+              anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+            >
+              <FaShoppingCart size={22} />
+            </Badge>
+          </Link>
+
+          {/* Login / User */}
+          {user && user.id ? (
+            <UserMenu />
+          ) : (
+            <Link
+              to="/login"
+              className="flex items-center gap-1 border px-3 py-1 rounded hover:text-slate-300"
+            >
+              <MdOutlineLogin />
+              <span className="text-sm">Login</span>
+            </Link>
+          )}
+
+          {/* Mobile Hamburger */}
+          <div className="sm:hidden">
+            <Hamburger toggled={navbarOpen} toggle={setNavbarOpen} size={20} />
+          </div>
         </div>
-    )
-}
+      </div>
+
+      {/* Mobile Dropdown Menu */}
+      <ul
+        className={`sm:hidden absolute top-[70px] left-0 w-full bg-[#3E5F44] text-white shadow-md flex flex-col gap-4 px-6 py-4 transition-all duration-150
+          ${navbarOpen ? "opacity-100 visible" : "opacity-0 invisible h-0 overflow-hidden"}`}
+      >
+        {[
+          { to: "/", label: "Home" },
+          { to: "/products", label: "Products" },
+          { to: "/about", label: "About" },
+          { to: "/contact", label: "Contact" }
+        ].map(({ to, label }) => (
+          <li key={to}>
+            <Link
+              className={`${path === to ? "text-white font-semibold" : "text-slate-200 hover:text-slate-300"}`}
+              to={to}
+              onClick={() => setNavbarOpen(false)}
+            >
+              {label}
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+};
 
 export default Navbar;
