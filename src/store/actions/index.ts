@@ -188,3 +188,10 @@ export const userRegistration = (
             setLoader(false);
         }
     }
+
+export const logoutUser = (navigate: ReturnType<typeof useNavigate>) =>
+    (dispatch: Dispatch) => {
+        dispatch({ type: "LOGOUT_USER" });
+        localStorage.removeItem("auth");
+        navigate("/login");
+    };
