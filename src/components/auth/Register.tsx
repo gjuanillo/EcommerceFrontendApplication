@@ -1,18 +1,15 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { CgLogIn } from "react-icons/cg"
 import InputField from "../shared/InputField";
 import Loader from "../shared/Loader";
-import { useAppDispatch } from "../../store/reducers/store";
-import { authenticateLogin } from "../../store/actions";
-import toast from "react-hot-toast";
 import type { LoginType } from "../../types/LoginType";
+import { FaUserPlus } from "react-icons/fa";
 
-const Login = () => {
+
+const Register = () => {
     const navigate = useNavigate();
     const [loader, setLoader] = useState<boolean>(false);
-    const dispatch = useAppDispatch();
     const {
         register,
         handleSubmit,
@@ -20,18 +17,17 @@ const Login = () => {
         formState: { errors },
     } = useForm<LoginType>({ mode: "onTouched" });
 
-    const loginHandler = async (data: LoginType) => {
+    const registerHandler = async (data: LoginType) => {
         console.log(data);
-        dispatch(authenticateLogin(data, toast, reset, navigate, setLoader));
     };
     return (
         <div className="min-h-[calc(100vh-64px)] flex justify-center items-center">
-            <form onSubmit={handleSubmit(loginHandler)}
+            <form onSubmit={handleSubmit(registerHandler)}
                 className="sm:w-[450px] w-[360px] shadow-md shadow-gray-400 py-8 sm:px-8 px-4 rounded-md">
                 <div className="flex items-center justify-center space-x-4">
-                    <CgLogIn className="text-slate-800 text-3xl" />
+                    <FaUserPlus className="text-slate-800 text-3xl" />
                     <h1 className="text-slate-800 font-display lg:text-3xl text-2xl font-bold">
-                        Login your Account
+                        Register an Account
                     </h1>
                 </div>
                 <hr className="mt-2 mb-5 text-black" />
@@ -47,9 +43,20 @@ const Login = () => {
                         errors={errors}
                     />
                     <InputField
+                        label="Email"
+                        required
+                        id="email"
+                        type="email"
+                        message="Email is required"
+                        placeHolder="email"
+                        register={register}
+                        errors={errors}
+                    />
+                    <InputField
                         label="Password"
                         required
                         id="password"
+                        min={6}
                         type="password"
                         message="Password is required"
                         placeHolder="password"
@@ -69,16 +76,16 @@ const Login = () => {
                                 spinnerSize={18}
                                 color="inherit"
                             />
-                            Logging in...
+                            Creating an account...
                         </>
                     ) : (
-                        "Login"
+                        "Register"
                     )}
                 </button>
                 <p className="text-center text-sm text-slate-700 mt-6">
-                    Don't have an account? {" "}
-                    <Link to="/register" className="font-semibold hover:underline text-[#3E5f44]">
-                        <span>Sign Up</span>
+                    Have an existing account? {" "}
+                    <Link to="/login" className="font-semibold hover:underline text-[#3E5f44]">
+                        <span>Login</span>
                     </Link>
                 </p>
             </form>
@@ -86,4 +93,4 @@ const Login = () => {
     );
 }
 
-export default Login;
+export default Register;

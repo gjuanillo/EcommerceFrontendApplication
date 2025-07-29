@@ -9,6 +9,7 @@ import { Toaster } from 'react-hot-toast'
 import Cart from './components/cart/Cart'
 import Login from './components/auth/Login'
 import PrivateRoute from './components/PrivateRoute'
+import Register from './components/auth/Register'
 
 function App() {
     return (
@@ -16,14 +17,17 @@ function App() {
             <Router>
                 <Navbar />
                 <Routes>
+                    {/* Public & Private */}
                     <Route path='/' element={<Home />} />
                     <Route path='/products' element={<Products />} />
                     <Route path='/about' element={<About />} />
                     <Route path='/contact' element={<Contact />} />
                     <Route path='/cart' element={<Cart />} />
+
                     {/* Public Only */}
                     <Route element={<PrivateRoute publicPage />}>
                         <Route path='/login' element={<Login />} />
+                        <Route path='/register' element={<Register />} />
                     </Route>
                 </Routes>
             </Router>
