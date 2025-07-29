@@ -66,7 +66,7 @@ const Cart = () => {
                         Taxes and shipping are calculated at checkout
                     </p>
                     <Link className="w-full flex justify-end " to="/checkout">
-                        <button onCopy={() => { }}
+                        <button onClick={() => { }}
                             className="font-semibold w-[300px] py-2 px-4 border border-[#3E5F44] text-[#3E5F44] hover:bg-[#3E5F44] hover:text-white transition duration-300 flex items-center justify-center gap-2 rounded-sm">
                             <MdShoppingCart size={20} />
                             Proceed to Checkout

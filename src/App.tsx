@@ -10,6 +10,8 @@ import Cart from './components/cart/Cart'
 import Login from './components/auth/Login'
 import PrivateRoute from './components/PrivateRoute'
 import Register from './components/auth/Register'
+import NotFound from './components/NotFound'
+import Profile from './components/Profile'
 
 function App() {
     return (
@@ -23,11 +25,17 @@ function App() {
                     <Route path='/about' element={<About />} />
                     <Route path='/contact' element={<Contact />} />
                     <Route path='/cart' element={<Cart />} />
+                    <Route path='/*' element={<NotFound />} />
 
                     {/* Public Only */}
                     <Route element={<PrivateRoute publicPage />}>
                         <Route path='/login' element={<Login />} />
                         <Route path='/register' element={<Register />} />
+                    </Route>
+
+                    {/* Private Only */}
+                    <Route element={<PrivateRoute />}>
+                        <Route path='/profile' element={<Profile />} />
                     </Route>
                 </Routes>
             </Router>
