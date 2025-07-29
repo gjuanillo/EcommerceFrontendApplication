@@ -6,7 +6,8 @@ import { cartReducer } from './cartReducer';
 import { authReducer } from './authReducer';
 
 
-const user = JSON.parse(localStorage.getItem("auth") || "[]");
+const rawUser = localStorage.getItem("auth");
+const user = rawUser ? JSON.parse(rawUser) : null;
 const cartItems = JSON.parse(localStorage.getItem("cartItems") || "[]");
 const initialState = {
     carts: {

@@ -8,6 +8,10 @@ import Contact from './components/Contact'
 import { Toaster } from 'react-hot-toast'
 import Cart from './components/cart/Cart'
 import Login from './components/auth/Login'
+import PrivateRoute from './components/PrivateRoute'
+import Register from './components/auth/Register'
+import NotFound from './components/NotFound'
+import Profile from './components/Profile'
 
 function App() {
     return (
@@ -15,12 +19,24 @@ function App() {
             <Router>
                 <Navbar />
                 <Routes>
+                    {/* Public & Private */}
                     <Route path='/' element={<Home />} />
                     <Route path='/products' element={<Products />} />
                     <Route path='/about' element={<About />} />
                     <Route path='/contact' element={<Contact />} />
                     <Route path='/cart' element={<Cart />} />
-                    <Route path='/login' element={<Login />} />
+                    <Route path='/*' element={<NotFound />} />
+
+                    {/* Public Only */}
+                    <Route element={<PrivateRoute publicPage />}>
+                        <Route path='/login' element={<Login />} />
+                        <Route path='/register' element={<Register />} />
+                    </Route>
+
+                    {/* Private Only */}
+                    <Route element={<PrivateRoute />}>
+                        <Route path='/profile' element={<Profile />} />
+                    </Route>
                 </Routes>
             </Router>
             <Toaster position='bottom-center' />

@@ -2,16 +2,19 @@ import React, { useState } from 'react';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { Avatar } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { BiUser } from 'react-icons/bi'
 import { TbLogout } from 'react-icons/tb';
 import { LuPackage2 } from 'react-icons/lu';
 import { useSelector } from 'react-redux';
-import type { RootState } from '../store/reducers/store';
+import { useAppDispatch, type RootState } from '../store/reducers/store';
+import { logoutUser } from '../store/actions';
 
 const UserMenu = () => {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
+    const dispatch = useAppDispatch();
+    const navigate = useNavigate();
     const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
         setAnchorEl(event.currentTarget);
     };
@@ -20,7 +23,7 @@ const UserMenu = () => {
     };
     const { user } = useSelector((state: RootState) => state.auth);
     const logoutHandler = () => {
-
+        dispatch(logoutUser(navigate));
     }
 
     return (
