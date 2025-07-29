@@ -21,7 +21,6 @@ const Login = () => {
     } = useForm<LoginType>({ mode: "onTouched" });
 
     const loginHandler = async (data: LoginType) => {
-        console.log(data);
         dispatch(authenticateLogin(data, toast, reset, navigate, setLoader));
     };
     return (

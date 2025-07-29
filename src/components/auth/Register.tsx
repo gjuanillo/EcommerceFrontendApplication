@@ -5,10 +5,14 @@ import InputField from "../shared/InputField";
 import Loader from "../shared/Loader";
 import type { LoginType } from "../../types/LoginType";
 import { FaUserPlus } from "react-icons/fa";
+import { useAppDispatch } from "../../store/reducers/store";
+import { userRegistration } from "../../store/actions";
+import toast from "react-hot-toast";
 
 
 const Register = () => {
     const navigate = useNavigate();
+    const dispatch = useAppDispatch();
     const [loader, setLoader] = useState<boolean>(false);
     const {
         register,
@@ -18,7 +22,7 @@ const Register = () => {
     } = useForm<LoginType>({ mode: "onTouched" });
 
     const registerHandler = async (data: LoginType) => {
-        console.log(data);
+        dispatch(userRegistration(data, toast, reset, navigate, setLoader))
     };
     return (
         <div className="min-h-[calc(100vh-64px)] flex justify-center items-center">

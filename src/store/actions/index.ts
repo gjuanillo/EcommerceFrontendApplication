@@ -166,3 +166,25 @@ export const authenticateLogin = (
             setLoader(false);
         }
     }
+
+
+export const userRegistration = (
+    sendData: LoginType,
+    tst: typeof toast, reset: UseFormReset<LoginType>,
+    navigate: ReturnType<typeof useNavigate>,
+    setLoader: React.Dispatch<React.SetStateAction<boolean>>) =>
+    async () => {
+        try {
+            setLoader(true);
+            const { data } = await api.post('/auth/signup', sendData)
+            reset();
+            tst.success(data?.message || "User Account Created");
+            navigate("/login");
+        } catch (err) {
+            const error = err as AxiosError<{ message: string }>;
+            console.log(error);
+            tst.error(error?.response?.data?.message || "Internal Server Error");
+        } finally {
+            setLoader(false);
+        }
+    }
