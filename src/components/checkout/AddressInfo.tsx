@@ -1,0 +1,39 @@
+import { FaAddressBook } from "react-icons/fa";
+import Loader from "../shared/Loader";
+
+const AddressInfo = () => {
+    const noAddressExist: boolean = true;
+    const isLoading: boolean = false;
+    return (
+        <div className="pt-4">
+            {
+                noAddressExist ? (
+                    <div className="p-6 rounded-lg max-w-md mx-auto flex flex-col justify-center items-center">
+                        <FaAddressBook size={50} className="text-gray-500 mb-4" />
+                        <h1 className="mb-2 text-slate-800 text-center font-semibold text-2xl">
+                            No Saved Address
+                        </h1>
+                        <h1 className="mb-6 text-slate-600 text-center">
+                            Add your delivery address to complete your purchase
+                        </h1>
+                    </div>
+                ) : (
+                    <div className="relative p-6 rounded-lg max-w-md mx-auto">
+                        <h1 className="text-slate-800 text-center font-bold text-2xl">
+                            Choose your Delivery Address
+                        </h1>
+                        {isLoading ? (
+                            <Loader />
+                        ) : (
+                            <div className="space-y-4 pt-6">
+                                <p>Address List</p>
+                            </div>
+                        )}
+                    </div>
+                )
+            }
+        </div >
+    )
+}
+
+export default AddressInfo;
