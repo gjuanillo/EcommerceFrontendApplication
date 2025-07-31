@@ -1,4 +1,5 @@
 import type React from "react";
+import type { FieldErrors, UseFormRegister } from "react-hook-form";
 
 interface InputFieldProps {
     label: string;

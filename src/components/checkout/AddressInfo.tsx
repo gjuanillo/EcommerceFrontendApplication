@@ -1,9 +1,17 @@
 import { FaAddressBook } from "react-icons/fa";
 import Loader from "../shared/Loader";
+import { useState, type SetStateAction } from "react";
+import AddressInfoModal from "./AddressInfoModal";
 
 const AddressInfo = () => {
     const noAddressExist: boolean = true;
     const isLoading: boolean = false;
+    const [openAddressModal, setOpenAddressModal] = useState<boolean>(false);
+    const [selectedAddress, setSelectedAddress] = useState("");
+    const addNewAddressHandler = () => {
+        setSelectedAddress("");
+        setOpenAddressModal(true);
+    }
     return (
         <div className="pt-4">
             {
@@ -16,7 +24,7 @@ const AddressInfo = () => {
                         <h1 className="mb-6 text-slate-600 text-center">
                             Add your delivery address to complete your purchase
                         </h1>
-                        <button className="px-4 py-2 border border-[#3E5F44] text-[#3E5F44] 
+                        <button onClick={addNewAddressHandler} className="px-4 py-2 border border-[#3E5F44] text-[#3E5F44] 
                             hover:bg-[#3E5F44] hover:text-white font-semibold 
                             rounded-md transition-colors duration-200">
                             Add Address
@@ -37,6 +45,7 @@ const AddressInfo = () => {
                     </div>
                 )
             }
+            <AddressInfoModal isOpen={openAddressModal} setIsOpen={setOpenAddressModal} />
         </div >
     )
 }
