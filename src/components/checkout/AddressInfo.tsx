@@ -2,6 +2,7 @@ import { FaAddressBook } from "react-icons/fa";
 import Loader from "../shared/Loader";
 import { useState, type SetStateAction } from "react";
 import AddressInfoModal from "./AddressInfoModal";
+import AddAddressForm from "./AddAddressForm";
 
 const AddressInfo = () => {
     const noAddressExist: boolean = true;
@@ -45,7 +46,9 @@ const AddressInfo = () => {
                     </div>
                 )
             }
-            <AddressInfoModal isOpen={openAddressModal} setIsOpen={setOpenAddressModal} />
+            <AddressInfoModal isOpen={openAddressModal} setIsOpen={setOpenAddressModal}>
+                <AddAddressForm />
+            </AddressInfoModal>
         </div >
     )
 }
