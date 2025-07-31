@@ -16,6 +16,11 @@ const AddressInfo = () => {
                         <h1 className="mb-6 text-slate-600 text-center">
                             Add your delivery address to complete your purchase
                         </h1>
+                        <button className="px-4 py-2 border border-[#3E5F44] text-[#3E5F44] 
+                            hover:bg-[#3E5F44] hover:text-white font-semibold 
+                            rounded-md transition-colors duration-200">
+                            Add Address
+                        </button>
                     </div>
                 ) : (
                     <div className="relative p-6 rounded-lg max-w-md mx-auto">
