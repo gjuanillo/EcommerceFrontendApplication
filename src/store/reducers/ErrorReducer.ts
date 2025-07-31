@@ -5,13 +5,15 @@ interface initialStateType {
     errorMessage: string | null
     categoryLoader: boolean;
     categoryError: string | null;
+    btnLoader: boolean;
 }
 
 const initialState: initialStateType = {
     isLoading: false,
     errorMessage: null,
     categoryLoader: false,
-    categoryError: null
+    categoryError: null,
+    btnLoader: false,
 };
 
 export const ErrorReducer = (state = initialState, action: AnyAction) => {
