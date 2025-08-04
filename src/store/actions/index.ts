@@ -198,7 +198,6 @@ export const logoutUser = (navigate: ReturnType<typeof useNavigate>) =>
 
 export const addUpdateUserAddress = (sendData, tst, addressId, setOpenAddress) =>
     async (dispatch: Dispatch, getState: () => RootState) => {
-        const { user } = getState().auth;
         dispatch({ type: "BUTTON_LOADER" });
         try {
             const { data } = await api.post('/addresses', sendData)
@@ -210,5 +209,6 @@ export const addUpdateUserAddress = (sendData, tst, addressId, setOpenAddress) =
             dispatch({ type: "IS_ERROR", payload: null });
         } finally {
             setOpenAddress(false);
+            dispatch({ type: "BUTTON_UNLOAD" })
         }
     }
