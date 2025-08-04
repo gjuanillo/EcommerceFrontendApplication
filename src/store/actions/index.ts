@@ -195,3 +195,20 @@ export const logoutUser = (navigate: ReturnType<typeof useNavigate>) =>
         localStorage.removeItem("auth");
         navigate("/login");
     };
+
+export const addUpdateUserAddress = (sendData, tst, addressId, setOpenAddress) =>
+    async (dispatch: Dispatch, getState: () => RootState) => {
+        dispatch({ type: "BUTTON_LOADER" });
+        try {
+            const { data } = await api.post('/addresses', sendData)
+            tst.success("User Address Saved Successfully");
+        } catch (err) {
+            const error = err as AxiosError<{ message: string }>;
+            console.log(error);
+            tst.error(error?.response?.data?.message || "Internal Server Error");
+            dispatch({ type: "IS_ERROR", payload: null });
+        } finally {
+            setOpenAddress(false);
+            dispatch({ type: "BUTTON_UNLOAD" })
+        }
+    }
