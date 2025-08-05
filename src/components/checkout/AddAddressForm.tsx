@@ -6,16 +6,20 @@ import { useSelector } from "react-redux";
 import { useAppDispatch, type RootState } from "../../store/reducers/store";
 import toast from "react-hot-toast";
 import { addUpdateUserAddress } from "../../store/actions";
+import type { AddressDataType } from "../../types/AddressDataType";
+type AddAddressFormPropType = {
+    address: any;
+    setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}
 
-const AddAddressForm = ({ address, setIsOpen }) => {
+const AddAddressForm = ({ address, setIsOpen }: AddAddressFormPropType) => {
     const dispatch = useAppDispatch();
     const {
         register,
         handleSubmit,
-        reset,
         formState: { errors },
-    } = useForm({ mode: "onTouched" });
-    const onSaveAddressHandler = async (data) => {
+    } = useForm<AddressDataType>({ mode: "onTouched" });
+    const onSaveAddressHandler = async (data: AddressDataType) => {
         dispatch(addUpdateUserAddress(
             data, toast, address?.addressId, setIsOpen
         ));

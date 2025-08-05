@@ -8,6 +8,7 @@ import type React from "react";
 import type { LoginType } from "../../types/LoginType";
 import { type UseFormReset } from "react-hook-form";
 import type { useNavigate } from "react-router-dom";
+import type { AddressDataType } from "../../types/AddressDataType";
 
 export const fetchProducts = (queryString?: string) => async (dispatch: Dispatch) => {
     try {
@@ -196,12 +197,17 @@ export const logoutUser = (navigate: ReturnType<typeof useNavigate>) =>
         navigate("/login");
     };
 
-export const addUpdateUserAddress = (sendData, tst, addressId, setOpenAddress) =>
+export const addUpdateUserAddress = (
+    sendData: AddressDataType,
+    tst: typeof toast,
+    addressId: number,
+    setOpenAddress: React.Dispatch<React.SetStateAction<boolean>>) =>
     async (dispatch: Dispatch, getState: () => RootState) => {
         dispatch({ type: "BUTTON_LOADER" });
         try {
             const { data } = await api.post('/addresses', sendData)
             tst.success("User Address Saved Successfully");
+            console.log(data);
         } catch (err) {
             const error = err as AxiosError<{ message: string }>;
             console.log(error);
@@ -212,3 +218,32 @@ export const addUpdateUserAddress = (sendData, tst, addressId, setOpenAddress) =
             dispatch({ type: "BUTTON_UNLOAD" })
         }
     }
+
+
+export const getUserAddresses = () =>
+    async (dispatch: Dispatch, getState: () => RootState) => {
+        try {
+            dispatch({ type: "IS_FETCHING" })
+            const { data } = await api.get(`/addresses`);
+            dispatch({ type: "USER_ADDRESS", payload: data });
+            dispatch({ type: "IS_SUCCESS" })
+        } catch (error: unknown) {
+
+            let errorMessage = "Failed to fetch user's addresses";
+
+            if (axios.isAxiosError(error)) {
+                if (error.response?.data?.message) {
+                    errorMessage = error.response.data.message;
+                } else if (error.message) {
+                    errorMessage = error.message;
+                }
+            } else if (error instanceof Error) {
+                errorMessage = error.message;
+            }
+
+            dispatch({
+                type: "IS_ERROR",
+                payload: errorMessage,
+            });
+        }
+    };

@@ -1,6 +1,6 @@
 import { FaAddressBook } from "react-icons/fa";
 import Loader from "../shared/Loader";
-import { useState, type SetStateAction } from "react";
+import { useState } from "react";
 import AddressInfoModal from "./AddressInfoModal";
 import AddAddressForm from "./AddAddressForm";
 
