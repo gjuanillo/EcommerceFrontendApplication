@@ -247,3 +247,10 @@ export const getUserAddresses = () =>
             });
         }
     };
+
+export const selectUserCheckoutAddress = (address: AddressDataType) => {
+    return {
+        type: "SELECT_CHECKOUT_ADDRESS",
+        payload: address
+    }
+}
