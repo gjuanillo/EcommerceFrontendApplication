@@ -3,10 +3,14 @@ import Loader from "../shared/Loader";
 import { useState } from "react";
 import AddressInfoModal from "./AddressInfoModal";
 import AddAddressForm from "./AddAddressForm";
+import type { AddressDataType } from "../../types/AddressDataType";
+import { useSelector } from "react-redux";
+import type { RootState } from "../../store/reducers/store";
+import AddressList from "./AddressList";
 
-const AddressInfo = () => {
-    const noAddressExist: boolean = true;
-    const isLoading: boolean = false;
+const AddressInfo = ({ address }: { address: AddressDataType[] }) => {
+    const noAddressExist: boolean = !address || address.length === 0;
+    const { isLoading, btnLoader } = useSelector((state: RootState) => state.errors);
     const [openAddressModal, setOpenAddressModal] = useState<boolean>(false);
     const [selectedAddress, setSelectedAddress] = useState("");
     const addNewAddressHandler = () => {
@@ -39,9 +43,23 @@ const AddressInfo = () => {
                         {isLoading ? (
                             <Loader />
                         ) : (
-                            <div className="space-y-4 pt-6">
-                                <p>Address List</p>
-                            </div>
+                            <>
+                                <div className="space-y-4 pt-6">
+                                    <AddressList address={address}
+                                        setSelectedAddress={setSelectedAddress}
+                                        setOpenAddressModal={setOpenAddressModal} />
+                                </div>
+                                {address.length > 0 && (
+                                    <div className="mt-4">
+                                        <button onClick={addNewAddressHandler} className="px-4 py-2 border border-[#3E5F44] text-[#3E5F44] 
+                                            hover:bg-[#3E5F44] hover:text-white font-semibold 
+                                            rounded-md transition-colors duration-200">
+                                            Add New
+                                        </button>
+                                    </div>
+                                )}
+                            </>
+
                         )}
                     </div>
                 )

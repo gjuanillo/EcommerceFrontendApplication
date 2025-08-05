@@ -1,4 +1,5 @@
 export interface AddressDataType {
+    addressId: number;
     buildingName: string;
     street: string;
     cityName: string;
