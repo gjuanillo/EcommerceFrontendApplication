@@ -2,7 +2,7 @@ import type { Dispatch } from "@reduxjs/toolkit";
 import api from "../../api/api";
 import axios, { AxiosError } from "axios";
 import type { ProductType } from "../../types/ProductType";
-import type { RootState } from "../reducers/store";
+import type { AppDispatch, RootState } from "../reducers/store";
 import { toast } from "react-hot-toast";
 import type React from "react";
 import type { LoginType } from "../../types/LoginType";
@@ -202,12 +202,16 @@ export const addUpdateUserAddress = (
     tst: typeof toast,
     addressId: number,
     setOpenAddress: React.Dispatch<React.SetStateAction<boolean>>) =>
-    async (dispatch: Dispatch, getState: () => RootState) => {
+    async (dispatch: AppDispatch) => {
         dispatch({ type: "BUTTON_LOADER" });
         try {
-            const { data } = await api.post('/addresses', sendData)
+            if (addressId) {
+                await api.put(`/addresses/${addressId}`, sendData)
+            } else {
+                await api.post('/addresses', sendData)
+            }
+            dispatch(getUserAddresses());
             tst.success("User Address Saved Successfully");
-            console.log(data);
         } catch (err) {
             const error = err as AxiosError<{ message: string }>;
             console.log(error);
@@ -221,7 +225,7 @@ export const addUpdateUserAddress = (
 
 
 export const getUserAddresses = () =>
-    async (dispatch: Dispatch, getState: () => RootState) => {
+    async (dispatch: Dispatch) => {
         try {
             dispatch({ type: "IS_FETCHING" })
             const { data } = await api.get(`/addresses`);
@@ -254,3 +258,44 @@ export const selectUserCheckoutAddress = (address: AddressDataType) => {
         payload: address
     }
 }
+
+export const clearCheckoutAddress = () => {
+    return {
+        type: "REMOVE_CHECKOUT_ADDRESS",
+    }
+}
+
+export const deleteUserAddress = (
+    tst: typeof toast,
+    addressId: number,
+    setOpenDeleteModal: React.Dispatch<React.SetStateAction<boolean>>) =>
+    async (dispatch: AppDispatch) => {
+        try {
+            dispatch({ type: "BTN_LOADER" })
+            await api.delete(`/addresses/${addressId}`);
+            dispatch({ type: "IS_SUCCESS" })
+            dispatch(getUserAddresses());
+            dispatch(clearCheckoutAddress());
+            tst.success("Address successfully deleted")
+        } catch (error: unknown) {
+
+            let errorMessage = "Failed to delete user's address";
+
+            if (axios.isAxiosError(error)) {
+                if (error.response?.data?.message) {
+                    errorMessage = error.response.data.message;
+                } else if (error.message) {
+                    errorMessage = error.message;
+                }
+            } else if (error instanceof Error) {
+                errorMessage = error.message;
+            }
+
+            dispatch({
+                type: "IS_ERROR",
+                payload: errorMessage,
+            });
+        } finally {
+            setOpenDeleteModal(false);
+        }
+    }

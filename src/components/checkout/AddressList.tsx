@@ -8,10 +8,11 @@ import { selectUserCheckoutAddress } from "../../store/actions";
 type AddressListPropType = {
     address: AddressDataType[],
     setSelectedAddress: React.Dispatch<React.SetStateAction<AddressDataType>>,
-    setOpenAddressModal: React.Dispatch<React.SetStateAction<boolean>>
+    setOpenAddressModal: React.Dispatch<React.SetStateAction<boolean>>,
+    setOpenDeleteModal: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const AddressList = ({ address, setSelectedAddress, setOpenAddressModal }: AddressListPropType) => {
+const AddressList = ({ address, setSelectedAddress, setOpenAddressModal, setOpenDeleteModal }: AddressListPropType) => {
     const dispatch = useAppDispatch();
     const { selectedCheckoutAddress } = useSelector((state: RootState) => state.auth);
     const handleAddressSelection = (add: AddressDataType) => {
@@ -23,12 +24,13 @@ const AddressList = ({ address, setSelectedAddress, setOpenAddressModal }: Addre
     }
     const onDeleteButtonHandler = (add: AddressDataType) => {
         setSelectedAddress(add);
+        setOpenDeleteModal(true);
     }
     return (
         <div className="space-y-4">
             {address.map((add) => (
                 <div key={add.addressId} onClick={() => handleAddressSelection(add)}
-                    className={`p-4 border rounded-md cursor-pointer relative 
+                    className={`p-4 shadow-gray-400 rounded-md shadow-lg cursor-pointer relative 
                     ${selectedCheckoutAddress?.addressId === add.addressId ? 'bg-green-100' : 'bg-white'}`}>
                     <div className="flex items-start">
                         <div className="space-y-1">

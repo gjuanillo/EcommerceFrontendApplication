@@ -5,17 +5,25 @@ import AddressInfoModal from "./AddressInfoModal";
 import AddAddressForm from "./AddAddressForm";
 import type { AddressDataType } from "../../types/AddressDataType";
 import { useSelector } from "react-redux";
-import type { RootState } from "../../store/reducers/store";
+import { useAppDispatch, type RootState } from "../../store/reducers/store";
 import AddressList from "./AddressList";
+import DeleteModal from "./DeleteModal";
+import toast from "react-hot-toast";
+import { deleteUserAddress } from "../../store/actions";
 
 const AddressInfo = ({ address }: { address: AddressDataType[] }) => {
     const noAddressExist: boolean = !address || address.length === 0;
     const { isLoading, btnLoader } = useSelector((state: RootState) => state.errors);
     const [openAddressModal, setOpenAddressModal] = useState<boolean>(false);
+    const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false);
     const [selectedAddress, setSelectedAddress] = useState("");
     const addNewAddressHandler = () => {
         setSelectedAddress("");
         setOpenAddressModal(true);
+    }
+    const dispatch = useAppDispatch();
+    const deleteAddressHandler = () => {
+        dispatch(deleteUserAddress(toast, selectedAddress.addressId, setOpenDeleteModal));
     }
     return (
         <div className="pt-4">
@@ -47,7 +55,9 @@ const AddressInfo = ({ address }: { address: AddressDataType[] }) => {
                                 <div className="space-y-4 pt-6">
                                     <AddressList address={address}
                                         setSelectedAddress={setSelectedAddress}
-                                        setOpenAddressModal={setOpenAddressModal} />
+                                        setOpenAddressModal={setOpenAddressModal}
+                                        setOpenDeleteModal={setOpenDeleteModal}
+                                    />
                                 </div>
                                 {address.length > 0 && (
                                     <div className="mt-4">
@@ -67,6 +77,11 @@ const AddressInfo = ({ address }: { address: AddressDataType[] }) => {
             <AddressInfoModal isOpen={openAddressModal} setIsOpen={setOpenAddressModal}>
                 <AddAddressForm address={selectedAddress} setIsOpen={setOpenAddressModal} />
             </AddressInfoModal>
+            <DeleteModal isOpen={openDeleteModal}
+                loader={btnLoader}
+                setIsOpen={setOpenDeleteModal}
+                title="Delete Address"
+                onDeleteHandler={deleteAddressHandler} />
         </div >
     )
 }

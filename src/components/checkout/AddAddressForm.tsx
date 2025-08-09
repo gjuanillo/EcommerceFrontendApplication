@@ -7,8 +7,9 @@ import { useAppDispatch, type RootState } from "../../store/reducers/store";
 import toast from "react-hot-toast";
 import { addUpdateUserAddress } from "../../store/actions";
 import type { AddressDataType } from "../../types/AddressDataType";
+import { useEffect } from "react";
 type AddAddressFormPropType = {
-    address: any;
+    address: AddressDataType;
     setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
@@ -17,6 +18,7 @@ const AddAddressForm = ({ address, setIsOpen }: AddAddressFormPropType) => {
     const {
         register,
         handleSubmit,
+        setValue,
         formState: { errors },
     } = useForm<AddressDataType>({ mode: "onTouched" });
     const onSaveAddressHandler = async (data: AddressDataType) => {
@@ -25,13 +27,23 @@ const AddAddressForm = ({ address, setIsOpen }: AddAddressFormPropType) => {
         ));
     }
     const { btnLoader } = useSelector((state: RootState) => state.errors)
+    useEffect(() => {
+        if (address?.addressId) {
+            setValue("buildingName", address?.buildingName);
+            setValue("street", address?.street);
+            setValue("cityName", address?.cityName);
+            setValue("state", address?.state);
+            setValue("zipCode", address?.zipCode);
+            setValue("country", address?.country);
+        }
+    }, [address, setValue]);
     return (
         <div className="">
             <form onSubmit={handleSubmit(onSaveAddressHandler)}
                 className="">
                 <div className="flex items-center justify-center mb-4 font-semibold">
                     <FaAddressCard className="mr-2 text-2xl" />
-                    Add Address
+                    {!address?.addressId ? "Add Address" : "Update Address"}
                 </div>
                 <div className="flex flex-col gap-4">
                     <InputField
