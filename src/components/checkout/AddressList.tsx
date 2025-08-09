@@ -28,7 +28,7 @@ const AddressList = ({ address, setSelectedAddress, setOpenAddressModal }: Addre
         <div className="space-y-4">
             {address.map((add) => (
                 <div key={add.addressId} onClick={() => handleAddressSelection(add)}
-                    className={`p-4 border rounded-md cursor-pointer relative 
+                    className={`p-4 shadow-gray-400 rounded-md shadow-lg cursor-pointer relative 
                     ${selectedCheckoutAddress?.addressId === add.addressId ? 'bg-green-100' : 'bg-white'}`}>
                     <div className="flex items-start">
                         <div className="space-y-1">
