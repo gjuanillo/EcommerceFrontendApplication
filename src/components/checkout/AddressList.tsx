@@ -8,10 +8,11 @@ import { selectUserCheckoutAddress } from "../../store/actions";
 type AddressListPropType = {
     address: AddressDataType[],
     setSelectedAddress: React.Dispatch<React.SetStateAction<AddressDataType>>,
-    setOpenAddressModal: React.Dispatch<React.SetStateAction<boolean>>
+    setOpenAddressModal: React.Dispatch<React.SetStateAction<boolean>>,
+    setOpenDeleteModal: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const AddressList = ({ address, setSelectedAddress, setOpenAddressModal }: AddressListPropType) => {
+const AddressList = ({ address, setSelectedAddress, setOpenAddressModal, setOpenDeleteModal }: AddressListPropType) => {
     const dispatch = useAppDispatch();
     const { selectedCheckoutAddress } = useSelector((state: RootState) => state.auth);
     const handleAddressSelection = (add: AddressDataType) => {
@@ -23,6 +24,7 @@ const AddressList = ({ address, setSelectedAddress, setOpenAddressModal }: Addre
     }
     const onDeleteButtonHandler = (add: AddressDataType) => {
         setSelectedAddress(add);
+        setOpenDeleteModal(true);
     }
     return (
         <div className="space-y-4">
