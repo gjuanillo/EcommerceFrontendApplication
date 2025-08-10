@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 import toast from "react-hot-toast";
 import Loader from "../shared/Loader";
 import ErrorPage from "../shared/ErrorPage";
+import PaymentMethod from "./PaymentMethod";
 
 const Checkout = () => {
     const [activeStep, setActiveStep] = useState<number>(0);
@@ -30,7 +31,7 @@ const Checkout = () => {
             toast.error("Please select your address to proceed!");
             return;
         }
-        if (activeStep === 0 && (!selectedCheckoutAddress || !paymentMethod)) {
+        if (activeStep === 1 && (!selectedCheckoutAddress || !paymentMethod)) {
             toast.error("Please select payment address to proceed!");
             return;
         }
@@ -53,6 +54,7 @@ const Checkout = () => {
             ) : (
                 <div className="mt-5">
                     {activeStep === 0 && <AddressInfo address={address} />}
+                    {activeStep === 1 && <PaymentMethod />}
                 </div>
             )}
             <div className="flex justify-between items-center px-4 fixed z-50 h-24 bottom-0 bg-white left-0 w-full py-4 border-slate-200"

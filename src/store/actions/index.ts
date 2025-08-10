@@ -299,3 +299,11 @@ export const deleteUserAddress = (
             setOpenDeleteModal(false);
         }
     }
+
+
+export const addPaymentMethod = (paymentMethod: string) => {
+    return {
+        type: "ADD_PAYMENT_METHOD",
+        payload: paymentMethod
+    }
+}
