@@ -6,6 +6,7 @@ import { getUserAddresses } from "../../store/actions";
 import { useSelector } from "react-redux";
 import toast from "react-hot-toast";
 import Loader from "../shared/Loader";
+import ErrorPage from "../shared/ErrorPage";
 
 const Checkout = () => {
     const [activeStep, setActiveStep] = useState<number>(0);
@@ -73,8 +74,9 @@ const Checkout = () => {
                     </button>
                 )}
             </div>
+            {errorMessage && <ErrorPage message={errorMessage} />}
         </div>
-    )
+    );
 }
 
 export default Checkout;
