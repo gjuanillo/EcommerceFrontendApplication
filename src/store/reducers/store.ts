@@ -4,6 +4,7 @@ import { ErrorReducer } from './ErrorReducer';
 import { useDispatch } from 'react-redux';
 import { cartReducer } from './cartReducer';
 import { authReducer } from './authReducer';
+import { paymentMethodReducer } from './paymentMethodReducer';
 
 
 const rawUser = localStorage.getItem("auth");
@@ -26,7 +27,8 @@ const store = configureStore({
         products: ProductReducer,
         errors: ErrorReducer,
         carts: cartReducer,
-        auth: authReducer
+        auth: authReducer,
+        payment: paymentMethodReducer,
     },
     preloadedState: initialState,
 })
