@@ -9,6 +9,8 @@ import Loader from "../shared/Loader";
 import ErrorPage from "../shared/ErrorPage";
 import PaymentMethod from "./PaymentMethod";
 import OrderSummary from "./OrderSummary";
+import StripePayment from "./StripePayment";
+import PaypalPayment from "./PaypalPayment";
 
 const Checkout = () => {
     const [activeStep, setActiveStep] = useState<number>(0);
@@ -58,6 +60,15 @@ const Checkout = () => {
                     {activeStep === 0 && <AddressInfo address={address} />}
                     {activeStep === 1 && <PaymentMethod />}
                     {activeStep === 2 && <OrderSummary totalPrice={totalPrice} cart={cart} address={selectedCheckoutAddress} paymentMethod={paymentMethod} />}
+                    {activeStep === 3 &&
+                        <>
+                            {paymentMethod === "Stripe" ? (
+                                <StripePayment />
+                            ) : (
+                                <PaypalPayment />
+                            )}
+                        </>
+                    }
                 </div>
             )}
             <div className="flex justify-between items-center px-4 fixed z-50 h-24 bottom-0 bg-white left-0 w-full py-4 border-slate-200"
