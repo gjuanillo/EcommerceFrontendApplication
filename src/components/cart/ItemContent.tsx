@@ -49,7 +49,7 @@ const ItemContent = ({
                     <h3 className="lg:text-[17px] text-sm text-slate-600">{truncateText(productName)}</h3>
                 </div>
                 <div className="md:w-32 mx-3 sm:w-21 w-12">
-                    <img src={`${import.meta.env.VITE_BACK_END_URL}/images${image}`} alt={productName} className="md:h-32 sm:h-21 h-12 md:w-32 sm:w-21 w-12 object-cover rounded-md" />
+                    <img src={`${import.meta.env.VITE_BACK_END_URL}/images/${image}`} alt={productName} className="md:h-32 sm:h-21 h-12 md:w-32 sm:w-21 w-12 object-cover rounded-md" />
                 </div>
                 <div className="flex items-start gap-5 mt-3">
                     <button

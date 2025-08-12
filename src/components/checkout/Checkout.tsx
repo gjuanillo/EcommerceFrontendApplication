@@ -8,12 +8,17 @@ import toast from "react-hot-toast";
 import Loader from "../shared/Loader";
 import ErrorPage from "../shared/ErrorPage";
 import PaymentMethod from "./PaymentMethod";
+import OrderSummary from "./OrderSummary";
+import StripePayment from "./StripePayment";
+import PaypalPayment from "./PaypalPayment";
 
 const Checkout = () => {
     const [activeStep, setActiveStep] = useState<number>(0);
     const dispatch = useAppDispatch();
     const { address, selectedCheckoutAddress } = useSelector((state: RootState) => state.auth);
     const { isLoading, errorMessage } = useSelector((state: RootState) => state.errors);
+    const { paymentMethod } = useSelector((state: RootState) => state.payment);
+    const { cart, totalPrice } = useSelector((state: RootState) => state.carts);
     const steps: string[] = [
         "Address",
         "Payment Method",
@@ -37,7 +42,6 @@ const Checkout = () => {
         }
         setActiveStep((prev) => prev + 1);
     };
-    const paymentMethod = false;
     return (
         <div className="py-14 min-h-[calc(120vh-100px)]">
             <Stepper activeStep={activeStep} alternativeLabel>
@@ -55,6 +59,16 @@ const Checkout = () => {
                 <div className="mt-5">
                     {activeStep === 0 && <AddressInfo address={address} />}
                     {activeStep === 1 && <PaymentMethod />}
+                    {activeStep === 2 && <OrderSummary totalPrice={totalPrice} cart={cart} address={selectedCheckoutAddress} paymentMethod={paymentMethod} />}
+                    {activeStep === 3 &&
+                        <>
+                            {paymentMethod === "Stripe" ? (
+                                <StripePayment />
+                            ) : (
+                                <PaypalPayment />
+                            )}
+                        </>
+                    }
                 </div>
             )}
             <div className="flex justify-between items-center px-4 fixed z-50 h-24 bottom-0 bg-white left-0 w-full py-4 border-slate-200"

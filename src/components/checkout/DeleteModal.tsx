@@ -5,8 +5,8 @@ type AddressInfoModalType = {
     isOpen: boolean;
     setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
     title: string;
-    onDeleteHandler: any;
-    loader: any;
+    onDeleteHandler: () => void;
+    loader: boolean;
 }
 
 const DeleteModal = ({ isOpen, setIsOpen, title, onDeleteHandler, loader }: AddressInfoModalType) => {

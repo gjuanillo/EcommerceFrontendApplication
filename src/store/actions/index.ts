@@ -200,7 +200,7 @@ export const logoutUser = (navigate: ReturnType<typeof useNavigate>) =>
 export const addUpdateUserAddress = (
     sendData: AddressDataType,
     tst: typeof toast,
-    addressId: number,
+    addressId: number | undefined,
     setOpenAddress: React.Dispatch<React.SetStateAction<boolean>>) =>
     async (dispatch: AppDispatch) => {
         dispatch({ type: "BUTTON_LOADER" });
@@ -307,3 +307,65 @@ export const addPaymentMethod = (paymentMethod: string) => {
         payload: paymentMethod
     }
 }
+
+
+export const createUserCart = (sendCartItems) =>
+    async (dispatch: AppDispatch) => {
+        try {
+            dispatch({ type: "IS_FETCHING" })
+            await api.post('/carts/create', sendCartItems);
+            await dispatch(getUserCart());
+        } catch (error: unknown) {
+
+            let errorMessage = "Failed to create cart items";
+
+            if (axios.isAxiosError(error)) {
+                if (error.response?.data?.message) {
+                    errorMessage = error.response.data.message;
+                } else if (error.message) {
+                    errorMessage = error.message;
+                }
+            } else if (error instanceof Error) {
+                errorMessage = error.message;
+            }
+
+            dispatch({
+                type: "IS_ERROR",
+                payload: errorMessage,
+            });
+        }
+    };
+
+export const getUserCart = () =>
+    async (dispatch: Dispatch, getState: () => RootState) => {
+        try {
+            dispatch({ type: "IS_FETCHING" })
+            const { data } = await api.get('/carts/users/cart');
+            dispatch({
+                type: "GET_USER_CART_PRODUCTS",
+                payload: data.products,
+                totalPrice: data.totalPrice,
+                cartId: data.cartId
+            });
+            localStorage.setItem("cartItems", JSON.stringify(getState().carts.cart));
+            dispatch({ type: "IS_SUCCESS" })
+        } catch (error: unknown) {
+
+            let errorMessage = "Failed to fetch cart items";
+
+            if (axios.isAxiosError(error)) {
+                if (error.response?.data?.message) {
+                    errorMessage = error.response.data.message;
+                } else if (error.message) {
+                    errorMessage = error.message;
+                }
+            } else if (error instanceof Error) {
+                errorMessage = error.message;
+            }
+
+            dispatch({
+                type: "IS_ERROR",
+                payload: errorMessage,
+            });
+        }
+    };

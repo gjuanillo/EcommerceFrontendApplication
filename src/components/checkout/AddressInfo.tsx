@@ -16,14 +16,16 @@ const AddressInfo = ({ address }: { address: AddressDataType[] }) => {
     const { isLoading, btnLoader } = useSelector((state: RootState) => state.errors);
     const [openAddressModal, setOpenAddressModal] = useState<boolean>(false);
     const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false);
-    const [selectedAddress, setSelectedAddress] = useState("");
+    const [selectedAddress, setSelectedAddress] = useState<AddressDataType | null>(null);
     const addNewAddressHandler = () => {
-        setSelectedAddress("");
+        setSelectedAddress(null);
         setOpenAddressModal(true);
     }
     const dispatch = useAppDispatch();
     const deleteAddressHandler = () => {
-        dispatch(deleteUserAddress(toast, selectedAddress.addressId, setOpenDeleteModal));
+        if (selectedAddress) {
+            dispatch(deleteUserAddress(toast, selectedAddress.addressId, setOpenDeleteModal));
+        }
     }
     return (
         <div className="pt-4">
