@@ -1,4 +1,14 @@
-const OrderSummary = ({ totalPrice, cart, address, paymentMethod }) => {
+import type { AddressDataType } from "../../types/AddressDataType";
+import type { ProductType } from "../../types/ProductType";
+import { formatPrice, formatPriceCalculation } from "../../utils/formatPrice";
+type OrderSummaryPropType = {
+    totalPrice: number,
+    cart: ProductType[],
+    address: AddressDataType,
+    paymentMethod: string | null
+}
+
+const OrderSummary = ({ totalPrice, cart, address, paymentMethod }: OrderSummaryPropType) => {
     return (
         <div className="container mx-auto px-4">
             <div className="flex flex-wrap">
@@ -43,7 +53,7 @@ const OrderSummary = ({ totalPrice, cart, address, paymentMethod }) => {
                         <div className="p-4 shadow-gray-400 rounded-lg shadow-sm">
                             <h2 className="text-2xl font-semibold mb-2">Order Items</h2>
                             <div className="space-y-2">
-                                {cart?.map((item) => (
+                                {cart?.map((item: ProductType) => (
                                     <div key={item?.productId} className="flex items-center">
                                         <img src={`${import.meta.env.VITE_BACK_END_URL}/images/${item?.image}`}
                                             alt={item?.productName} className="w-12 h-12 rounded cursor-pointer 
@@ -51,8 +61,8 @@ const OrderSummary = ({ totalPrice, cart, address, paymentMethod }) => {
                                         <div className="text-gray-500 w-full">
                                             <p>{item?.productName}</p>
                                             <div className="flex justify-between">
-                                                <p>{item?.quantity} x ${item?.specialPrice}</p>
-                                                <p>${item?.quantity * item?.specialPrice}</p>
+                                                <p>{item?.quantity} x {formatPrice(item?.specialPrice ?? 0)}</p>
+                                                <p>${formatPriceCalculation(item?.quantity, item?.specialPrice ?? 0)}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -67,15 +77,15 @@ const OrderSummary = ({ totalPrice, cart, address, paymentMethod }) => {
                         <div className="space-y-2">
                             <div className="flex justify-between">
                                 <span>Products</span>
-                                <span>${totalPrice}</span>
+                                <span>{formatPrice(totalPrice)}</span>
                             </div>
                             <div className="flex justify-between">
                                 <span>Tax</span>
-                                <span>$0.00</span>
+                                <span>{formatPrice(0.0)}</span>
                             </div>
                             <div className="flex justify-between">
                                 <span>Subtotal</span>
-                                <span>${totalPrice}</span>
+                                <span>{formatPrice(totalPrice)}</span>
                             </div>
 
                         </div>
