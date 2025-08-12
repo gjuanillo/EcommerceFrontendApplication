@@ -7,7 +7,7 @@ import { selectUserCheckoutAddress } from "../../store/actions";
 
 type AddressListPropType = {
     address: AddressDataType[],
-    setSelectedAddress: React.Dispatch<React.SetStateAction<AddressDataType>>,
+    setSelectedAddress: React.Dispatch<React.SetStateAction<AddressDataType | null>>,
     setOpenAddressModal: React.Dispatch<React.SetStateAction<boolean>>,
     setOpenDeleteModal: React.Dispatch<React.SetStateAction<boolean>>
 }

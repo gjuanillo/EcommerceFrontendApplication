@@ -9,7 +9,7 @@ import { addUpdateUserAddress } from "../../store/actions";
 import type { AddressDataType } from "../../types/AddressDataType";
 import { useEffect } from "react";
 type AddAddressFormPropType = {
-    address: AddressDataType;
+    address: AddressDataType| null;
     setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 

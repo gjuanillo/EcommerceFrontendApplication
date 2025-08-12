@@ -17,9 +17,6 @@ function ProductViewModal({ open, setOpen, product, isAvailable }: ModalProps) {
     if (!product) return null; // Early return if product is undefined
 
     const { productId, productName, image, description, quantity, price, discount, specialPrice } = product;
-    const handleClickOpen = () => {
-        setOpen(true)
-    }
 
     return (
         <>

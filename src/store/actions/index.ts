@@ -200,7 +200,7 @@ export const logoutUser = (navigate: ReturnType<typeof useNavigate>) =>
 export const addUpdateUserAddress = (
     sendData: AddressDataType,
     tst: typeof toast,
-    addressId: number,
+    addressId: number | undefined,
     setOpenAddress: React.Dispatch<React.SetStateAction<boolean>>) =>
     async (dispatch: AppDispatch) => {
         dispatch({ type: "BUTTON_LOADER" });
